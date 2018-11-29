@@ -1,14 +1,19 @@
-project(flyingstuff)
+project(Fantasy_Hero)
 
 add_executable(${PROJECT_NAME}.elf
-        src/main.cpp
-        src/sample_start_scene.cpp
-        src/sample_start_scene.h
-        src/lama.h
-        src/sample_sound.h
-        src/kul.h
-        src/flying_stuff_scene.cpp
-        src/flying_stuff_scene.h)
+        src/Battle_Scene_Audio.h
+		src/Battle_Scene_Background.h
+		src/Battle_Scene.h
+		src/main.cpp
+		src/shared.h
+		src/Stage_Start_Audio.h
+		src/Start_Scene_Audio.h
+		src/Start_Scene_Background.h
+		src/Start_Scene_Background1.h
+		src/Start_Scene_Background2.h
+        src/start_Scene.cpp
+        src/start_Scene.h
+		)
 
 target_link_libraries(${PROJECT_NAME}.elf gba-sprite-engine)
 

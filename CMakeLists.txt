@@ -24,4 +24,4 @@ project(gba-sprite-engine-project VERSION 0.1 LANGUAGES CXX)
 include(GNUInstallDirs)
 
 add_subdirectory(engine)
-add_subdirectory(Fantasy Hero)
+add_subdirectory("Fantasy Hero")

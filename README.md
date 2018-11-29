@@ -11,14 +11,23 @@ DISCLAIMER:
 All the code that is copied or used from other sources will be mentioned in the reference section of this file.
 
 #TODO list:
-Build the overal GBA engine
-Get ideas for the sprite
-Implement Sprite-engine of Wouter Groeneveld
-Implement Start scene
-Add the first layers
-Add sprites
+1.  Build & Implement the overal GBA engine 
+    -> Done!
+2.  Create the Start_Scene
+    -> Add Sounds (Found error in Sound file: weird noise, Audacity?)
+    -> Add Sprites
+    -> Add Background
+    -> Change Font Color
+    -> Selection screen
+3.  Create the Battle_Scene
+    -> Add Sounds    
+    -> Add Sprites
+    -> Implement Controls
+
+4.  More coming!
 
 #References:
+Music           -->     https://downloads.khinsider.com/game-soundtracks/
 GBA Specs       -->     https://www.cs.rit.edu/~tjh8300/CowBite/CowBiteSpec.htm
 Used Sprites    -->     https://www.spriters-resource.com/
 Sprite engine   -->     https://github.com/wgroeneveld/gba-sprite-engine
