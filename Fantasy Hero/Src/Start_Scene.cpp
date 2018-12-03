@@ -10,35 +10,52 @@
 #include "Start_Scene_Audio.h"
 #include "Start_Scene_Background.h"
 #include "Stage_Start_Audio.h"
+#include "Press_Start_Object1.h"
+#include "Press_Start_Object2.h"
+#include "Start_Scene_Shared.h"	
 
 
 //include overgang naar volgende scene
-//#include "Battle_Scene.h"
+#include "Battle_Scene.h"
 
 std::vector<Background *> StartScene::backgrounds() {
     return { bg.get() };
 }
 
 std::vector<Sprite *> StartScene::sprites() {
-    return {};
+    return { startButton1.get(), startButton2.get() };
 }
 
 void StartScene::load() {
-    foregroundPalette = std::unique_ptr<ForegroundPaletteManager>(new ForegroundPaletteManager());
+    foregroundPalette = std::unique_ptr<ForegroundPaletteManager>(new ForegroundPaletteManager(sharedPal, sizeof(sharedPal)));
     backgroundPalette = std::unique_ptr<BackgroundPaletteManager>(new BackgroundPaletteManager(Start_Scene_BackgroundPal, sizeof(Start_Scene_BackgroundPal)));
- 
-    bg = std::unique_ptr<Background>(new Background(1, Start_Scene_BackgroundTiles, sizeof(Start_Scene_BackgroundTiles), Start_Scene_BackgroundMap, sizeof(Start_Scene_BackgroundMap)));
-    bg.get()->useMapScreenBlock(16);
+    engine.get()->disableText();
+
+    SpriteBuilder<Sprite> builder;
     
-    TextStream::instance().setText("PRESS START", 16, 10);
-    TextStream::instance().setFontColor(16);
+    startButton1 = builder
+        .withData(Press_Start_Object1Tiles, sizeof(Press_Start_Object1Tiles))
+        .withSize(SIZE_64_64)
+        .withAnimated(2, 15)
+        .withLocation(60, 90)
+        .buildPtr();
+
+    startButton2 = builder
+        .withData(Press_Start_Object2Tiles, sizeof(Press_Start_Object2Tiles))
+        .withSize(SIZE_64_64)
+        .withAnimated(2, 15)
+        .withLocation(125, 90)
+        .buildPtr();    
+
+    bg = std::unique_ptr<Background>(new Background(1, Start_Scene_BackgroundTiles, sizeof(Start_Scene_BackgroundTiles), Start_Scene_BackgroundMap, sizeof(Start_Scene_BackgroundMap)));
+    bg.get()->useMapScreenBlock(24);
    
     engine->enqueueMusic(Start_Scene_Audio, Start_Scene_Audio_bytes);
 }
 
 void StartScene::tick(u16 keys) {
-    if(scrollY !=  48){
-        scrollY -= 1;
+    if(scrollY !=  0){
+        scrollY -= 0.5;
         bg.get()->scroll(scrollX, scrollY);
     }
 
@@ -46,8 +63,9 @@ void StartScene::tick(u16 keys) {
         engine->enqueueSound(Stage_Start_Audio, Stage_Start_Audio_bytes);
 
         if(!engine->isTransitioning()) {
-            //engine->transitionIntoScene(new Battle_Scene(engine), new FadeOutScene(2));
+            engine->transitionIntoScene(new BattleScene(engine), new FadeOutScene(2));
         }
+
     } else if(keys & KEY_LEFT) {
         
     } else if(keys & KEY_RIGHT) {

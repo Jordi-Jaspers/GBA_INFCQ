@@ -13,6 +13,8 @@
 class StartScene : public Scene {
 private:
     std::unique_ptr<Background> bg;
+    std::unique_ptr<Sprite> startButton1;
+    std::unique_ptr<Sprite> startButton2;
     int scrollX, scrollY;
 
 public:

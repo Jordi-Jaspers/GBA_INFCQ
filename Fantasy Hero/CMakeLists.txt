@@ -4,13 +4,14 @@ add_executable(${PROJECT_NAME}.elf
         src/Battle_Scene_Audio.h
 		src/Battle_Scene_Background.h
 		src/Battle_Scene.h
+		src/Battle_Scene.cpp
 		src/main.cpp
-		src/shared.h
+		src/Start_Scene_Shared.h
+		src/Press_Start_Object1.h
+		src/Press_Start_Object2.h
 		src/Stage_Start_Audio.h
 		src/Start_Scene_Audio.h
 		src/Start_Scene_Background.h
-		src/Start_Scene_Background1.h
-		src/Start_Scene_Background2.h
         src/start_Scene.cpp
         src/start_Scene.h
 		)
