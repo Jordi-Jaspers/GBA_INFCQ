@@ -1,12 +1,12 @@
 STATUS: Validatating gr.
 WARNING:   No explicit src path.
 STATUS: Validation succeeded.
-STATUS: Started run at: 2018-12-03, 11:29:57
+STATUS: Started run at: 2018-12-03, 14:50:00
 STATUS: Validatating gr.
 STATUS: Validation succeeded.
 STATUS: Preparing data.
 STATUS: Work-DIB creation.
-STATUS: Work-DIB creation complete: 64x128@8.
+STATUS: Work-DIB creation complete: 1024x1024@8.
 STATUS: Tile preparation.
 STATUS:   tiling to 8x8 tiles.
 STATUS: Tile preparation complete.
@@ -15,5 +15,5 @@ STATUS: Graphics preparation complete.
 STATUS: Palette preparation.
 STATUS: Palette preparation complete.
 STATUS: Data preparation complete.
-STATUS: Export to C: Press_Start_Object2 into C:\Users\Jordi Jaspers\Google Drive\UHasselt\3de Aca. Bachelor IIW\Softwareontwerp met C & C++\GBA_INFCQ\Fantasy Hero\Sprites\Objects\Press_Start_Object2.c .
+STATUS: Export to C: smb3_cb47f744294 into C:\Users\Jordi Jaspers\Google Drive\UHasselt\3de Aca. Bachelor IIW\Softwareontwerp met C & C++\GBA_INFCQ\Fantasy Hero\Sprites\Tilesets\smb3-cb47f744294.c .
 STATUS: Run completed :).

@@ -8,7 +8,9 @@
 
 class BattleScene : public Scene {
 private:
-    
+    std::unique_ptr<Background> bg2;
+    int scrollX, scrollY;
+
 public:
     BattleScene(std::shared_ptr<GBAEngine> engine) : Scene(engine) {}
 

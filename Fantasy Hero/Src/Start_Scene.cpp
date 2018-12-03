@@ -17,6 +17,7 @@
 
 //include overgang naar volgende scene
 #include "Battle_Scene.h"
+#include "Battle_Scene_Background.h"
 
 std::vector<Background *> StartScene::backgrounds() {
     return { bg.get() };
