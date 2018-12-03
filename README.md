@@ -14,17 +14,23 @@ All the code that is copied or used from other sources will be mentioned in the 
 1.  Build & Implement the overal GBA engine 
     -> Done!
 2.  Create the Start_Scene
-    -> Add Sounds (Found error in Sound file: weird noise, Audacity?)
-    -> Add Sprites
-    -> Add Background
-    -> Change Font Color
-    -> Selection screen
+    -> Add Sounds           -> Done!
+    -> Add Sprites          -> Still Problem with transparency...
+    -> Add Background       -> Done!
+    -> Change Font Color    -> Done!
+    -> Selection screen     -> Takes too much time (Start, Credits)
 3.  Create the Battle_Scene
-    -> Add Sounds    
+    -> Add Sounds           -> Done!
     -> Add Sprites
+    -> Create background
+    -> Add background              
     -> Implement Controls
+    -> Collision Detection
+    -> Score System
 
-4.  More coming!
+4.  Create Ending Screen
+    -> Go back to the Start Screen
+
 
 #References:
 Music           -->     https://downloads.khinsider.com/game-soundtracks/
