@@ -9,10 +9,13 @@
 class BattleScene : public Scene {
 private:
     std::unique_ptr<Background> bg2;
+    std::unique_ptr<Sprite> Hero;
+    std::unique_ptr<Sprite> Enemy;
+    std::unique_ptr<Sprite> Star;
     int scrollX, scrollY;
 
 public:
-    BattleScene(std::shared_ptr<GBAEngine> engine) : Scene(engine) {}
+    BattleScene(std::shared_ptr<GBAEngine> engine) : Scene(engine), scrollX(0), scrollY(0) {}
 
     std::vector<Sprite *> sprites() override;
     std::vector<Background *> backgrounds() override;
