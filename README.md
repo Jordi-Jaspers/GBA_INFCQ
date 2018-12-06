@@ -15,18 +15,18 @@ All the code that is copied or used from other sources will be mentioned in the 
     -> Done!
 2.  Create the Start_Scene
     -> Add Sounds           -> Done!
-    -> Add Sprites          -> Still Problem with transparency...
+    -> Add Sprites          -> Done
     -> Add Background       -> Done!
     -> Change Font Color    -> Done!
     -> Selection screen     -> Takes too much time (Start, Credits)
 3.  Create the Battle_Scene
     -> Add Sounds           -> Done!
-    -> Add Sprites
-    -> Create background
-    -> Add background              
-    -> Implement Controls
-    -> Collision Detection
-    -> Score System
+    -> Add Sprites          -> not yet
+    -> Create background    -> Done!
+    -> Add background       -> Crashes Because of adding the background...????      
+    -> Implement Controls   -> not yet
+    -> Collision Detection  -> not yet
+    -> Score System         -> not yet
 
 4.  Create Ending Screen
     -> Go back to the Start Screen
