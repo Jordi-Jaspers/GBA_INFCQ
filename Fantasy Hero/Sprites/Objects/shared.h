@@ -3,7 +3,7 @@
 
 //======================================================================
 //
-//	shared, 16x16@8,
+//	shared, 16x16@8, 
 //	+ palette 7 entries, not compressed
 //	Total size: 14 = 14
 //
@@ -13,15 +13,12 @@
 //
 //======================================================================
 
-const unsigned short sharedPal[8] __attribute__((aligned(4))) =
-	{
-		0x0000,
-		0x7C14,
-		0x3506,
-		0x3569,
-		0x5A30,
-		0x7B16,
-		0x7FFF,
-};
+#ifndef GRIT_SHARED_H
+#define GRIT_SHARED_H
+
+#define sharedPalLen 14
+extern const unsigned short sharedPal[8];
+
+#endif // GRIT_SHARED_H
 
 //}}BLOCK(shared)

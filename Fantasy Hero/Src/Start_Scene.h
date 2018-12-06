@@ -15,6 +15,7 @@ private:
     std::unique_ptr<Background> bg;
     std::unique_ptr<Sprite> startButton1;
     std::unique_ptr<Sprite> startButton2;
+    std::unique_ptr<Sprite> knightDance;
     int scrollX, scrollY;
 
 public:

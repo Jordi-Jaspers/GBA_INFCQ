@@ -12,6 +12,7 @@
 #include "Stage_Start_Audio.h"
 #include "Press_Start_Object1.h"
 #include "Press_Start_Object2.h"
+#include "Knight_Dance_Object.h"
 #include "Start_Scene_Shared.h"	
 
 
@@ -24,7 +25,7 @@ std::vector<Background *> StartScene::backgrounds() {
 }
 
 std::vector<Sprite *> StartScene::sprites() {
-    return { startButton1.get(), startButton2.get() };
+    return { startButton1.get(), startButton2.get(), knightDance.get() };
 }
 
 void StartScene::load() {
@@ -38,7 +39,7 @@ void StartScene::load() {
         .withData(Press_Start_Object1Tiles, sizeof(Press_Start_Object1Tiles))
         .withSize(SIZE_64_64)
         .withAnimated(2, 15)
-        .withLocation(60, 90)
+        .withLocation(61, 90)
         .buildPtr();
 
     startButton2 = builder
@@ -46,7 +47,14 @@ void StartScene::load() {
         .withSize(SIZE_64_64)
         .withAnimated(2, 15)
         .withLocation(125, 90)
-        .buildPtr();    
+        .buildPtr();
+
+    knightDance = builder
+        .withData(Knight_DanceTiles, sizeof(Knight_DanceTiles))
+        .withSize(SIZE_16_32)
+        .withAnimated(4, 25)
+        .withLocation(115, 75)
+        .buildPtr();
 
     bg = std::unique_ptr<Background>(new Background(1, Start_Scene_BackgroundTiles, sizeof(Start_Scene_BackgroundTiles), Start_Scene_BackgroundMap, sizeof(Start_Scene_BackgroundMap)));
     bg.get()->useMapScreenBlock(24);
