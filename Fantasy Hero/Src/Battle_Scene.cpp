@@ -38,13 +38,13 @@ void BattleScene::load() {
     SpriteBuilder<Sprite> builder;
 
     bg2 = std::unique_ptr<Background>(new Background(1, Battle_Scene_BackgroundTiles, sizeof(Battle_Scene_BackgroundTiles), Battle_Scene_BackgroundMap, sizeof(Battle_Scene_BackgroundMap)));
-    bg2.get()->useMapScreenBlock(24);
+    bg2.get()->useMapScreenBlock(16);
 
     Hero = builder
-        .withData(Hero_Walk_LeftTiles, sizeof(Hero_Walk_LeftTiles))
-        .withSize(SIZE_16_32)
+        .withData(HeroTiles, sizeof(HeroTiles))
+        .withSize(SIZE_32_32)
         .withAnimated(4, 5)
-        .withLocation(0, 0)
+        .withLocation(0, 128)
         .buildPtr();
     Hero -> stopAnimating();    
 
@@ -65,6 +65,15 @@ void BattleScene::load() {
 void BattleScene::tick(u16 keys) {
     Hero -> setVelocity(0,0);
     Hero -> stopAnimating();
+    Hero -> animateToFrame(1);
+
+    scrollY -= 0.5;
+    bg2.get()->scroll(0, scrollY);
+    TextStream::instance() << scrollY;
+
+    while(Hero -> getY() < 128){
+        Hero -> setVelocity(0,2);
+    }
 
     if (keys & KEY_START)
     {
@@ -89,6 +98,8 @@ void BattleScene::tick(u16 keys) {
     }
     else if (keys & KEY_UP)
     {
+        Hero -> setVelocity(0,-2);
+        Hero -> animateToFrame(5);
     }
     else if (keys & KEY_DOWN)
     {

@@ -1,19 +1,19 @@
 
-//{{BLOCK(Power_Up_Star)
+//{{BLOCK(Power)
 
 //======================================================================
 //
-//	Power_Up_Star, 32x96@8, 
+//	Power, 32x96@8, 
 //	+ 48 tiles not compressed
 //	Total size: 3072 = 3072
 //
-//	Time-stamp: 2018-12-07, 08:48:46
+//	Time-stamp: 2018-12-07, 19:59:57
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.6
 //	( http://www.coranac.com/projects/#grit )
 //
 //======================================================================
 
-const unsigned int Power_Up_StarTiles[768] __attribute__((aligned(4)))=
+const unsigned int PowerTiles[768] __attribute__((aligned(4)))=
 {
 	0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
 	0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
@@ -124,4 +124,4 @@ const unsigned int Power_Up_StarTiles[768] __attribute__((aligned(4)))=
 	0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
 };
 
-//}}BLOCK(Power_Up_Star)
+//}}BLOCK(Power)

@@ -8,6 +8,8 @@
 #include <libgba-sprite-engine/sprites/sprite.h>
 #include <libgba-sprite-engine/gba_engine.h>
 
+bool flipped;
+
 Sprite::Sprite(const Sprite &other) : Sprite(nullptr, 0, other.x, other.y, other.spriteSize) {
     tileIndex = other.tileIndex;
 }
@@ -30,10 +32,16 @@ bool Sprite::isOffScreen() {
     return x < 0 || x > GBA_SCREEN_WIDTH || y < 0 || y > GBA_SCREEN_HEIGHT;
 }
 
+bool Sprite::getFlipped(){
+    return flipped;
+}
+
 void Sprite::flipHorizontally(bool flip) {
     if(flip) {
+        flipped = true;
         oam->attr1 |= ATTR1_HFLIP;
     } else {
+        flipped = false;
         oam->attr1 &= FLIP_HORIZONTAL_CLEAR;
     }
 }

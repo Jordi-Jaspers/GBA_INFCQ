@@ -45,7 +45,7 @@ private:
     void updateAnimation();
     void syncVelocity();
     void syncAnimation();
-
+    
 protected:
     const void *data;
     int x, y, dx, dy;
@@ -84,6 +84,7 @@ public:
 
     void moveTo(int x, int y);
     bool collidesWith(Sprite &s2);
+    bool getFlipped();
 
     void flipVertically(bool flip);
     void flipHorizontally(bool flip);
