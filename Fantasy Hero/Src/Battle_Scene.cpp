@@ -40,13 +40,13 @@ void BattleScene::load() {
     bg2 = std::unique_ptr<Background>(new Background(1, Battle_Scene_BackgroundTiles, sizeof(Battle_Scene_BackgroundTiles), Battle_Scene_BackgroundMap, sizeof(Battle_Scene_BackgroundMap)));
     bg2.get()->useMapScreenBlock(24);
 
-    Xco_Hero = 0;
-    Yco_Hero = 0;
     Hero = builder
         .withData(Hero_Walk_LeftTiles, sizeof(Hero_Walk_LeftTiles))
         .withSize(SIZE_16_32)
-        .withLocation(Xco_Hero, Yco_Hero)
+        .withAnimated(4, 5)
+        .withLocation(0, 0)
         .buildPtr();
+    Hero -> stopAnimating();    
 
     // Enemy = builder
     //                    .withData(Press_Start_Object2Tiles, sizeof(Press_Start_Object2Tiles))
@@ -63,6 +63,8 @@ void BattleScene::load() {
 
 
 void BattleScene::tick(u16 keys) {
+    Hero -> setVelocity(0,0);
+    Hero -> stopAnimating();
 
     if (keys & KEY_START)
     {
@@ -74,24 +76,16 @@ void BattleScene::tick(u16 keys) {
         }
     }
     else if (keys & KEY_LEFT)
-    {   
-        Xco_Hero --;
-        Hero = builder
-            .withData(Hero_Walk_LeftTiles, sizeof(Hero_Walk_LeftTiles))
-            .withSize(SIZE_16_32)
-            .withAnimated(4, 15)
-            .withLocation(0, 0)
-            .buildPtr();
+    {
+        Hero -> flipHorizontally(false);
+        Hero -> setVelocity(-2, 0);
+        Hero -> animate();
     }
     else if (keys & KEY_RIGHT)
-    {
-        Xco_Hero ++;
-        Hero = builder
-            .withData(Hero_Walk_RightTiles, sizeof(Hero_Walk_RightTiles))
-            .withSize(SIZE_16_32)
-            .withAnimated(4, 15)
-            .withLocation(0, 0)
-            .buildPtr();
+    {   
+        Hero -> flipHorizontally(true);
+        Hero -> setVelocity(2, 0);
+        Hero -> animate();
     }
     else if (keys & KEY_UP)
     {
