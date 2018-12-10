@@ -80,8 +80,10 @@ void BattleScene::load() {
 
 
 void BattleScene::tick(u16 keys) {
-    scrollY -= 0.5;
-    bg2.get()->scroll(0, scrollY);
+    // if(scrollY != 128){
+    // scrollY -= 0.5;
+    // bg2 ->scroll(scrollX, scrollY);
+    // }
 
     Hero->stopAnimating();
 

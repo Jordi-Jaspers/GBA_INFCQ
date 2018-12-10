@@ -21,10 +21,10 @@ All the code that is copied or used from other sources will be mentioned in the 
     -> Selection screen     -> Takes too much time (Start, Credits)  
 3.  Create the Battle_Scene  
     -> Add Sounds           -> Done!  
-    -> Add Sprites          -> not yet  
+    -> Add Sprites          -> Added Hero Sprite  
     -> Create background    -> Done!  
-    -> Add background       -> Crashes Because of adding the background...????   
-    -> Implement Controls   -> not yet  
+    -> Add background       -> Done! only need movement.   
+    -> Implement Controls   -> Done! 
     -> Collision Detection  -> not yet  
     -> Score System         -> not yet  
       

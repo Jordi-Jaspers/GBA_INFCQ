@@ -15,7 +15,7 @@ private:
     int scrollX, scrollY;
 
 public:
-    BattleScene(std::shared_ptr<GBAEngine> engine) : Scene(engine), scrollX(0), scrollY(0) {}
+    BattleScene(std::shared_ptr<GBAEngine> engine) : Scene(engine), scrollX(64), scrollY(42) {}
 
     std::vector<Sprite *> sprites() override;
     std::vector<Background *> backgrounds() override;
