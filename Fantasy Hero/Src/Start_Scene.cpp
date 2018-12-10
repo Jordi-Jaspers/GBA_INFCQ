@@ -18,7 +18,6 @@
 
 //include overgang naar volgende scene
 #include "Battle_Scene.h"
-#include "Battle_Scene_Audio.h"
 #include "Battle_Scene_Background.h"
 
 std::vector<Background *> StartScene::backgrounds() {
@@ -60,7 +59,7 @@ void StartScene::load() {
     bg = std::unique_ptr<Background>(new Background(1, Start_Scene_BackgroundTiles, sizeof(Start_Scene_BackgroundTiles), Start_Scene_BackgroundMap, sizeof(Start_Scene_BackgroundMap)));
     bg.get()->useMapScreenBlock(24);
    
-    engine->enqueueMusic(Start_Scene_Audio, Start_Scene_Audio_bytes);
+    engine->enqueueMusic(Start_Scene_Audio, Start_Scene_Audio_bytes, 88200);
 }
 
 void StartScene::tick(u16 keys) {
@@ -73,7 +72,7 @@ void StartScene::tick(u16 keys) {
         engine->enqueueSound(Stage_Start_Audio, Stage_Start_Audio_bytes);
 
         if(!engine->isTransitioning()) {
-            engine->enqueueSound(Battle_Scene_Audio, Battle_Scene_Audio_bytes);
+            engine->dequeueAllSounds();;
             engine->transitionIntoScene(new BattleScene(engine), new FadeOutScene(2));
         }
 

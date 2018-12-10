@@ -1,19 +1,17 @@
 STATUS: Validatating gr.
 WARNING:   No explicit src path.
 STATUS: Validation succeeded.
-STATUS: Started run at: 2018-12-07, 21:00:30
+STATUS: Started run at: 2018-12-10, 10:34:40
 STATUS: Validatating gr.
 STATUS: Validation succeeded.
 STATUS: Preparing data.
 STATUS: Work-DIB creation.
-STATUS: Work-DIB creation complete: 64x96@8.
+STATUS: Work-DIB creation complete: 32x256@8.
 STATUS: Tile preparation.
 STATUS:   tiling to 8x8 tiles.
 STATUS: Tile preparation complete.
 STATUS: Graphics preparation.
 STATUS: Graphics preparation complete.
-STATUS: Palette preparation.
-STATUS: Palette preparation complete.
 STATUS: Data preparation complete.
-STATUS: Export to C: Battle_Scene_Background into C:\Users\Jordi Jaspers\Google Drive\UHasselt\3de Aca. Bachelor IIW\Softwareontwerp met C & C++\GBA_INFCQ\Fantasy Hero\Sprites\Battle Scene Objects\Battle_Scene_Background.c .
+STATUS: Export to C: Hero into C:\Users\Jordi Jaspers\Google Drive\UHasselt\3de Aca. Bachelor IIW\Softwareontwerp met C & C++\GBA_INFCQ\Fantasy Hero\Sprites\Battle Scene Objects\Hero.c .
 STATUS: Run completed :).

@@ -7,15 +7,14 @@
 
 //include objecten voor deze scene
 #include "Battle_Scene.h"
+#include "Sound_Effect.h"
 #include "Battle_Scene_Audio.h"
 #include "Battle_Scene_Background.h"
 #include "Battle_Scene_Shared.h"
 #include "Battle_Scene_Objects.h"
 
-SpriteBuilder<Sprite> builder;
-
-int Xco_Hero;
-int Yco_Hero;
+bool isJumped;
+bool gravityOn;
 
 std::vector<Sprite *> BattleScene::sprites() {
     return {
@@ -31,14 +30,32 @@ std::vector<Background *> BattleScene::backgrounds() {
     };
 }
 
+void setIsJumped(bool jumped){
+    isJumped = jumped;
+}
+
+bool getIsJumped(){
+    return isJumped;
+}
+
+void setGravityOn(bool gravity){
+    gravityOn = gravity;
+}
+
+bool getGravityOn(){
+    return gravityOn;
+}
+
 void BattleScene::load() {
     foregroundPalette = std::unique_ptr<ForegroundPaletteManager>(new ForegroundPaletteManager(sharedPal, sizeof(sharedPal)));
     backgroundPalette = std::unique_ptr<BackgroundPaletteManager>(new BackgroundPaletteManager(Battle_Scene_BackgroundPal, sizeof(Battle_Scene_BackgroundPal)));
 
     SpriteBuilder<Sprite> builder;
 
+    engine->enqueueMusic(Battle_Scene_Audio, Battle_Scene_Audio_bytes, 88200);
+
     bg2 = std::unique_ptr<Background>(new Background(1, Battle_Scene_BackgroundTiles, sizeof(Battle_Scene_BackgroundTiles), Battle_Scene_BackgroundMap, sizeof(Battle_Scene_BackgroundMap)));
-    bg2.get()->useMapScreenBlock(16);
+    bg2.get() -> useMapScreenBlock(16);
 
     Hero = builder
         .withData(HeroTiles, sizeof(HeroTiles))
@@ -63,45 +80,75 @@ void BattleScene::load() {
 
 
 void BattleScene::tick(u16 keys) {
-    Hero -> setVelocity(0,0);
-    Hero -> stopAnimating();
-    Hero -> animateToFrame(1);
-
     scrollY -= 0.5;
     bg2.get()->scroll(0, scrollY);
-    TextStream::instance() << scrollY;
 
-    while(Hero -> getY() < 128){
-        Hero -> setVelocity(0,2);
+    Hero->stopAnimating();
+
+    if(Hero -> getY() == 128 && getIsJumped()){
+        setIsJumped(false);
+        setGravityOn(false);
+    }
+    else if(Hero -> getY() == 90 && getIsJumped()){
+        setGravityOn(true);
+    }
+
+    if (getIsJumped() && !getGravityOn()){
+        Hero->animateToFrame(5);
+        Hero->setVelocity(0, -2);
+    }
+    else if(getGravityOn()){
+        Hero->animateToFrame(1);
+        Hero->setVelocity(0, 2);
+    }
+    else if(!gravityOn && !keys){
+        Hero->animateToFrame(1);
+        Hero->setVelocity(0, 0);
     }
 
     if (keys & KEY_START)
     {
-        if (engine -> isDisabled()){
+        if (engine -> isDisabled())
             engine.get()->enableText();
-        }
-        else{
+        else
             engine.get()->disableText();
-        }
     }
+
     else if (keys & KEY_LEFT)
     {
-        Hero -> flipHorizontally(false);
-        Hero -> setVelocity(-2, 0);
-        Hero -> animate();
+        Hero->flipHorizontally(false);
+        Hero->animate();
+
+        if (Hero->getY() < 128)
+            Hero->setVelocity(-2, 2);
+        else
+            Hero->setVelocity(-2, 0);
     }
+
     else if (keys & KEY_RIGHT)
     {   
         Hero -> flipHorizontally(true);
-        Hero -> setVelocity(2, 0);
         Hero -> animate();
+
+        if (Hero->getY() < 128)
+            Hero->setVelocity(2, 2);
+        else
+            Hero->setVelocity(2, 0);
     }
+
     else if (keys & KEY_UP)
     {
-        Hero -> setVelocity(0,-2);
-        Hero -> animateToFrame(5);
+        if (!getIsJumped()){
+            setIsJumped(true);
+            engine -> enqueueSound(Jump_Audio, Jump_Audio_bytes, 88200);
+            Hero->animateToFrame(5);
+            Hero->setVelocity(0, -2);
+        }
     }
-    else if (keys & KEY_DOWN)
+
+    else if (keys & KEY_A)
     {
+        engine->enqueueSound(Slash_Audio, Slash_Audio_bytes, 88200);
+        Hero->animateToFrame(7);
     }
 }
