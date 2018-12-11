@@ -72,7 +72,7 @@ void StartScene::tick(u16 keys) {
         engine->enqueueSound(Stage_Start_Audio, Stage_Start_Audio_bytes);
 
         if(!engine->isTransitioning()) {
-            engine->dequeueAllSounds();;
+            engine->dequeueAllSounds();
             engine->transitionIntoScene(new BattleScene(engine), new FadeOutScene(2));
         }
 

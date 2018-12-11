@@ -18,9 +18,8 @@ bool gravityOn;
 
 std::vector<Sprite *> BattleScene::sprites() {
     return {
-    Hero.get()
-    //Enemy.get(),
-    //Star.get()
+    Hero.get(),
+    Star.get()
     };
 }
 
@@ -52,32 +51,28 @@ void BattleScene::load() {
 
     SpriteBuilder<Sprite> builder;
 
-    engine->enqueueMusic(Battle_Scene_Audio, Battle_Scene_Audio_bytes, 88200);
-
-    bg = std::unique_ptr<Background>(new Background(1, Battle_Scene_BackgroundTiles, sizeof(Battle_Scene_BackgroundTiles), Battle_Scene_BackgroundMap, sizeof(Battle_Scene_BackgroundMap)));
-    bg.get() -> useMapScreenBlock(16);
+    Star = builder
+        .withData(StarTiles, sizeof(StarTiles))
+        .withSize(SIZE_32_32)
+        .withAnimated(3, 10)
+        .withLocation(0, 108)
+        .buildPtr();
 
     Hero = builder
         .withData(HeroTiles, sizeof(HeroTiles))
         .withSize(SIZE_32_32)
         .withAnimated(4, 5)
         .withLocation(0, 108)
+        .withinBounds()
         .buildPtr();
     Hero -> stopAnimating();
 
+    engine->enqueueMusic(Battle_Scene_Audio, Battle_Scene_Audio_bytes, 88200);
+
+    bg = std::unique_ptr<Background>(new Background(1, Battle_Scene_BackgroundTiles, sizeof(Battle_Scene_BackgroundTiles), Battle_Scene_BackgroundMap, sizeof(Battle_Scene_BackgroundMap)));
+    bg.get()->useMapScreenBlock(16);
+
     bg->scroll(5, 95); 
-
-    // Enemy = builder
-    //                    .withData(Press_Start_Object2Tiles, sizeof(Press_Start_Object2Tiles))
-    //                    .withSize(SIZE_64_64)
-    //                    .withLocation(0, 0)
-    //                    .buildPtr();
-
-    // Star = builder
-    //                   .withData(Knight_DanceTiles, sizeof(Knight_DanceTiles))
-    //                   .withSize(SIZE_16_32)
-    //                   .withLocation(0, 0)
-    //                   .buildPtr();
 }
 
 
