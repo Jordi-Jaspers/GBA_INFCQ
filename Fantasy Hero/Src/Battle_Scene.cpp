@@ -26,7 +26,7 @@ std::vector<Sprite *> BattleScene::sprites() {
 
 std::vector<Background *> BattleScene::backgrounds() {
     return {
-        bg2.get()
+        bg.get()
     };
 }
 
@@ -54,16 +54,18 @@ void BattleScene::load() {
 
     engine->enqueueMusic(Battle_Scene_Audio, Battle_Scene_Audio_bytes, 88200);
 
-    bg2 = std::unique_ptr<Background>(new Background(1, Battle_Scene_BackgroundTiles, sizeof(Battle_Scene_BackgroundTiles), Battle_Scene_BackgroundMap, sizeof(Battle_Scene_BackgroundMap)));
-    bg2.get() -> useMapScreenBlock(16);
+    bg = std::unique_ptr<Background>(new Background(1, Battle_Scene_BackgroundTiles, sizeof(Battle_Scene_BackgroundTiles), Battle_Scene_BackgroundMap, sizeof(Battle_Scene_BackgroundMap)));
+    bg.get() -> useMapScreenBlock(16);
 
     Hero = builder
         .withData(HeroTiles, sizeof(HeroTiles))
         .withSize(SIZE_32_32)
         .withAnimated(4, 5)
-        .withLocation(0, 128)
+        .withLocation(0, 108)
         .buildPtr();
-    Hero -> stopAnimating();    
+    Hero -> stopAnimating();
+
+    bg->scroll(5, 95); 
 
     // Enemy = builder
     //                    .withData(Press_Start_Object2Tiles, sizeof(Press_Start_Object2Tiles))
@@ -80,18 +82,14 @@ void BattleScene::load() {
 
 
 void BattleScene::tick(u16 keys) {
-    // if(scrollY != 128){
-    // scrollY -= 0.5;
-    // bg2 ->scroll(scrollX, scrollY);
-    // }
 
     Hero->stopAnimating();
 
-    if(Hero -> getY() == 128 && getIsJumped()){
+    if(Hero -> getY() == 108 && getIsJumped()){
         setIsJumped(false);
         setGravityOn(false);
     }
-    else if(Hero -> getY() == 90 && getIsJumped()){
+    else if(Hero -> getY() == 80 && getIsJumped()){
         setGravityOn(true);
     }
 
@@ -121,7 +119,7 @@ void BattleScene::tick(u16 keys) {
         Hero->flipHorizontally(false);
         Hero->animate();
 
-        if (Hero->getY() < 128)
+        if (Hero->getY() < 108)
             Hero->setVelocity(-2, 2);
         else
             Hero->setVelocity(-2, 0);
@@ -132,7 +130,7 @@ void BattleScene::tick(u16 keys) {
         Hero -> flipHorizontally(true);
         Hero -> animate();
 
-        if (Hero->getY() < 128)
+        if (Hero->getY() < 108)
             Hero->setVelocity(2, 2);
         else
             Hero->setVelocity(2, 0);
