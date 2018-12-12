@@ -12,12 +12,14 @@
 #include "Battle_Scene_Background.h"
 #include "Battle_Scene_Shared.h"
 #include "Battle_Scene_Objects.h"
+#include "Environment.h"
 
-bool isJumped;
-bool gravityOn;
+SpriteBuilder<Sprite> builder;
 
 std::vector<Sprite *> BattleScene::sprites() {
     return {
+    Platform1.get(),
+    // Platform2.get(),
     Hero.get(),
     Star.get()
     };
@@ -29,40 +31,35 @@ std::vector<Background *> BattleScene::backgrounds() {
     };
 }
 
-void setIsJumped(bool jumped){
-    isJumped = jumped;
-}
-
-bool getIsJumped(){
-    return isJumped;
-}
-
-void setGravityOn(bool gravity){
-    gravityOn = gravity;
-}
-
-bool getGravityOn(){
-    return gravityOn;
-}
-
 void BattleScene::load() {
     foregroundPalette = std::unique_ptr<ForegroundPaletteManager>(new ForegroundPaletteManager(sharedPal, sizeof(sharedPal)));
     backgroundPalette = std::unique_ptr<BackgroundPaletteManager>(new BackgroundPaletteManager(Battle_Scene_BackgroundPal, sizeof(Battle_Scene_BackgroundPal)));
 
-    SpriteBuilder<Sprite> builder;
+    CreateEnviroment();
+
+    Platform1 = builder
+        .withSize(SIZE_32_16)
+        .withData(Platform_DoubleTiles, sizeof(Platform_DoubleTiles))
+        .withLocation(203, YLowerBound+14)
+        .buildPtr();
+
+    // Platform2 = builder
+    //     .withSize(SIZE_32_8)
+    //     .withLocation(XStart, YLowerBound)
+    //     .buildPtr();
 
     Star = builder
         .withData(StarTiles, sizeof(StarTiles))
         .withSize(SIZE_32_32)
         .withAnimated(3, 10)
-        .withLocation(0, 108)
+        .withLocation(200, 65)
         .buildPtr();
 
     Hero = builder
         .withData(HeroTiles, sizeof(HeroTiles))
         .withSize(SIZE_32_32)
         .withAnimated(4, 5)
-        .withLocation(0, 108)
+        .withLocation(XStart, YLowerBound)
         .withinBounds()
         .buildPtr();
     Hero -> stopAnimating();
@@ -72,19 +69,58 @@ void BattleScene::load() {
     bg = std::unique_ptr<Background>(new Background(1, Battle_Scene_BackgroundTiles, sizeof(Battle_Scene_BackgroundTiles), Battle_Scene_BackgroundMap, sizeof(Battle_Scene_BackgroundMap)));
     bg.get()->useMapScreenBlock(16);
 
-    bg->scroll(5, 95); 
+    bg->scroll(5, 95);
 }
 
+void BattleScene::checkMainStageObstacles(){
+    if(getMainStage()){
+        if (Hero->getX() <= 175 && Hero->getY() == YLowerBound)
+        {
+            setOffPlatform();
+        }
+
+        if (Hero->collidesWith(*Platform1) && Hero->getY() >= YHigherBound+10 && Hero->getX() >= 175){
+            setOnPlatform();
+        }
+        else if (Hero->collidesWith(*Platform1) && Hero->getY() >= YLowerBound)
+        {
+        Hero->moveTo(170, YLowerBound);
+        }
+
+        if(Hero -> getX() >= 200 && Hero -> getY() == YHigherBound && getOnPlatform()){
+            NextEnviroment();
+            Hero -> moveTo(10, YLowerBound);
+            bg->scroll(5, 0);
+        }
+    }
+}
+
+void BattleScene::checkSubStageObstacles()
+{
+    if (!getMainStage()){
+        if (Hero->getX() <= 4 && Hero->getY() == YLowerBound)
+        {
+            MainEnviroment();
+            Hero->moveTo(208, YLowerBound);
+            bg->scroll(5, 95);
+        }
+    }
+}
 
 void BattleScene::tick(u16 keys) {
 
     Hero->stopAnimating();
 
-    if(Hero -> getY() == 108 && getIsJumped()){
+    checkMainStageObstacles();
+    checkSubStageObstacles();
+
+    if (Hero->getY() == YLowerBound && getIsJumped())
+    {
         setIsJumped(false);
         setGravityOn(false);
     }
-    else if(Hero -> getY() == 80 && getIsJumped()){
+    else if (Hero->getY() == YHigherBound && getIsJumped())
+    {
         setGravityOn(true);
     }
 
@@ -114,7 +150,7 @@ void BattleScene::tick(u16 keys) {
         Hero->flipHorizontally(false);
         Hero->animate();
 
-        if (Hero->getY() < 108)
+        if (Hero->getY() < YLowerBound)
             Hero->setVelocity(-2, 2);
         else
             Hero->setVelocity(-2, 0);
@@ -125,7 +161,7 @@ void BattleScene::tick(u16 keys) {
         Hero -> flipHorizontally(true);
         Hero -> animate();
 
-        if (Hero->getY() < 108)
+        if (Hero->getY() < YLowerBound)
             Hero->setVelocity(2, 2);
         else
             Hero->setVelocity(2, 0);
@@ -144,6 +180,7 @@ void BattleScene::tick(u16 keys) {
     else if (keys & KEY_A)
     {
         engine->enqueueSound(Slash_Audio, Slash_Audio_bytes, 88200);
+        TextStream::instance() << Hero->getX() << "&&" << Hero->getY(); //coordinate checker....
         Hero->animateToFrame(7);
     }
 }
