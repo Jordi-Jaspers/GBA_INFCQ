@@ -15,6 +15,8 @@
 #include "Environment.h"
 
 SpriteBuilder<Sprite> builder;
+int textCounter;
+bool textBool;
 
 std::vector<Sprite *> BattleScene::sprites() {
     return {
@@ -74,13 +76,14 @@ void BattleScene::load() {
 
 void BattleScene::checkMainStageObstacles(){
     if(getMainStage()){
-        if (Hero->getX() <= 175 && Hero->getY() == YLowerBound)
+        if (Hero->getX() <= 185 && Hero->getY() >= YLowerBound)
         {
             setOffPlatform();
         }
 
-        if (Hero->collidesWith(*Platform1) && Hero->getY() >= YHigherBound+10 && Hero->getX() >= 175){
+        if (Hero->collidesWith(*Platform1) && Hero->getY() >= YHigherBound+15 && Hero->getX() >= 185){
             setOnPlatform();
+            Hero->moveTo(Hero->getX(), YLowerBound);
         }
         else if (Hero->collidesWith(*Platform1) && Hero->getY() >= YLowerBound)
         {
@@ -105,21 +108,34 @@ void BattleScene::checkSubStageObstacles()
             bg->scroll(5, 95);
         }
     }
+
+    if(Hero -> collidesWith(*Star) && Hero -> getX() >= 190 && Hero -> getX() <= 208){
+        if(!textBool)
+        TextStream::instance() << "Powerup Activated!";
+        textBool = true;
+    }
+
 }
 
 void BattleScene::tick(u16 keys) {
-
     Hero->stopAnimating();
 
     checkMainStageObstacles();
     checkSubStageObstacles();
 
-    if (Hero->getY() == YLowerBound && getIsJumped())
+    textCounter ++;
+    if(textCounter == 100){
+        TextStream::instance().clear();
+        textCounter = 0;
+        textBool = false;
+    }
+
+    if (Hero->getY() >= YLowerBound)
     {
         setIsJumped(false);
         setGravityOn(false);
     }
-    else if (Hero->getY() == YHigherBound && getIsJumped())
+    else if (Hero->getY() <= YHigherBound && getIsJumped())
     {
         setGravityOn(true);
     }
@@ -180,7 +196,11 @@ void BattleScene::tick(u16 keys) {
     else if (keys & KEY_A)
     {
         engine->enqueueSound(Slash_Audio, Slash_Audio_bytes, 88200);
-        TextStream::instance() << Hero->getX() << "&&" << Hero->getY(); //coordinate checker....
         Hero->animateToFrame(7);
+
+        if(!textBool){
+            TextStream::instance() << Hero->getX() << "&&" << Hero->getY(); //coordinate checker....
+            textBool = true;
+        }
     }
 }

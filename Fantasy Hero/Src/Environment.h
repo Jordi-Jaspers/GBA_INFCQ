@@ -93,6 +93,7 @@ void setOffPlatform(){
         YHigherBound = 80;
         YLowerBound = 108;
         onPlatform = false;
+        gravityOn = true;
     }
 }
 
