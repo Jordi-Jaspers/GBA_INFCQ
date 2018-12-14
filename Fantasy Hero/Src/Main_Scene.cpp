@@ -13,22 +13,14 @@
 #include "Object_Sprites.h"
 #include "Object_Sprites_Shared.h"
 #include "Main_Scene_Background.h"
+#include "Main_Scene_Background1.h"
 
 Environment envMain;
 
-std::vector<Sprite *> MainScene::sprites()
-{
-    return {
-        Hero.get()};
-}
+MainScene::MainScene(const std::shared_ptr<GBAEngine> engine) : Scene(engine), scrollX(0), scrollY(0) {}
 
-std::vector<Background *> MainScene::backgrounds()
-{
-    return {
-        bgMoving.get(),
-        bgLevel.get()
-    };
-}
+std::vector<Sprite *> MainScene::sprites(){return {Hero.get()};}
+std::vector<Background *> MainScene::backgrounds(){return {bgMoving.get(), bgLevel.get()};}
 
 void MainScene::load()
 {
@@ -51,19 +43,19 @@ void MainScene::load()
 
     engine->enqueueMusic(Main_Scene_Audio, Main_Scene_Audio_bytes, 88200);
 
-    bgMoving = std::unique_ptr<Background>(new Background(3, Main_Scene_BackgroundTiles, sizeof(Main_Scene_BackgroundTiles), Main_Scene_Background1Map, sizeof(Main_Scene_Background1Map)));
+    bgLevel = std::unique_ptr<Background>(new Background(0, Main_Scene_BackgroundTiles, sizeof(Main_Scene_BackgroundTiles), Main_Scene_BackgroundMap, sizeof(Main_Scene_BackgroundMap)));
+    bgLevel -> useMapScreenBlock(24);
+    bgLevel -> scroll(0, 95);
+
+    bgMoving = std::unique_ptr<Background>(new Background(2, Main_Scene_Background1Tiles, sizeof(Main_Scene_Background1Tiles), Main_Scene_Background1Map, sizeof(Main_Scene_Background1Map)));
     bgMoving->useMapScreenBlock(16);
     bgMoving->scroll(0, 0);
-
-    bgLevel = std::unique_ptr<Background>(new Background(1, Main_Scene_BackgroundTiles, sizeof(Main_Scene_BackgroundTiles), Main_Scene_BackgroundMap, sizeof(Main_Scene_BackgroundMap)));
-    bgLevel -> useMapScreenBlock(16);
-    bgLevel -> scroll(0, 95);
 }
 
 void MainScene::tick(u16 keys)
 {
     scrollX += 0.5;
-    bgMoving->scroll(scrollX, 0);
+    bgMoving->scroll(scrollX, scrollY);
 
     Hero->stopAnimating();
 
@@ -138,6 +130,5 @@ void MainScene::tick(u16 keys)
     {
         engine->enqueueSound(Slash_Audio, Slash_Audio_bytes, 88200);
         Hero->animateToFrame(7);
-        TextStream::instance() << Hero->getX() << "&&" << Hero->getY(); //coordinate checker....
     }
 }

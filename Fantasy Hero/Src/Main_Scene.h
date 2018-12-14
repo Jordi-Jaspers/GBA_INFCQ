@@ -14,10 +14,11 @@ class MainScene : public Scene
     std::unique_ptr<Sprite> Hero;
     //std::unique_ptr<Sprite> Enemy;
 
-    int scrollX, scrollY;
+    float scrollX, scrollY;
 
   public:
-    MainScene(std::shared_ptr<GBAEngine> engine) : Scene(engine), scrollX(0), scrollY(0) {}
+    explicit MainScene(std::shared_ptr<GBAEngine> engine);
+    MainScene(MainScene &other) = delete;
 
     std::vector<Sprite *> sprites() override;
     std::vector<Background *> backgrounds() override;

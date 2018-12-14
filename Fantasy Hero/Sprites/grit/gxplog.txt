@@ -1,7 +1,7 @@
 STATUS: Validatating gr.
 WARNING:   No explicit src path.
 STATUS: Validation succeeded.
-STATUS: Started run at: 2018-12-14, 16:20:48
+STATUS: Started run at: 2018-12-15, 00:15:22
 STATUS: Validatating gr.
 STATUS: Validation succeeded.
 STATUS: Preparing data.
@@ -15,5 +15,5 @@ STATUS: Graphics preparation complete.
 STATUS: Palette preparation.
 STATUS: Palette preparation complete.
 STATUS: Data preparation complete.
-STATUS: Export to C: Battle_Scene_Background into C:\Users\Jordi Jaspers\Google Drive\UHasselt\3de Aca. Bachelor IIW\Softwareontwerp met C & C++\GBA_INFCQ\Fantasy Hero\Sprites\Main Scene Objects\Battle_Scene_Background.c .
+STATUS: Export to C: Main_Scene_Background into C:\Users\Jordi Jaspers\Google Drive\UHasselt\3de Aca. Bachelor IIW\Softwareontwerp met C & C++\GBA_INFCQ\Fantasy Hero\Sprites\Main Scene Objects\Main_Scene_Background.c .
 STATUS: Run completed :).

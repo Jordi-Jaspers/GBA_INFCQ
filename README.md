@@ -23,10 +23,12 @@ All the code that is copied or used from other sources will be mentioned in the 
     -> Add Sounds           -> Done!  
     -> Add Sprites          -> Done!  
     -> Create background    -> Done!  
-    -> Add background       -> Done! only need movement.   
+    -> Add background       -> Done!   
     -> Implement Controls   -> Done! 
     -> Collision Detection  -> Done! 
-    -> Score System         -> not yet  
+    -> Score System         -> not yet
+    -> created 2nd scene    -> Done!
+    -> double moving scene  -> Done! don't know why there are ugly bits on the first bg layer. don't use it.....  
       
 4.  Create Ending Screen    -> Done! 
   
