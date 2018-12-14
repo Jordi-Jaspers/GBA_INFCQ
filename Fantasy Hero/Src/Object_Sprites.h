@@ -1,4 +1,6 @@
 
+#ifndef OBJECT_SPRITES_SHARED_H
+#define OBJECT_SPRITES_SHARED_H
 
 //{{BLOCK(Power)
 
@@ -808,3 +810,5 @@ const unsigned int Platform_DoubleTiles[128] __attribute__((aligned(4)))=
 };
 
 //}}BLOCK(Platform_Double)
+
+#endif

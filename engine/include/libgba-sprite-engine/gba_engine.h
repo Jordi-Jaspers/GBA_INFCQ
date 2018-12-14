@@ -33,6 +33,8 @@ private:
     void cleanupPreviousScene();
     void enqueueSound(const s8 *data, int totalSamples, int sampleRate, SoundChannel channel);
 
+    bool transtioning;
+
     static void startOnVBlank() { REG_IME = 1; }
     static void stopOnVBlank() { REG_IME = 0; }
     static void onVBlank();
@@ -44,6 +46,8 @@ public:
     void dynamicallyAddSprite(Sprite* s) { spriteManager.add(s); }
     void transitionIntoScene(Scene* scene, SceneEffect* effect);
     bool isTransitioning() { return currentEffectForTransition != nullptr; }
+    bool getTransition(){return transtioning;}
+    void setTransition(bool boolean){transtioning = boolean;}
     void disableText() { this->disableTextBg = true; }
     void enableText() { this->disableTextBg = false; }
     bool isDisabled() {return disableTextBg;}

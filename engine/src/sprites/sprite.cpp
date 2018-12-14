@@ -80,7 +80,7 @@ void Sprite::updateVelocity() {
         if(this->x < 0) this->x = 0;
         if(this->y < 0) this->y = 0;
         if(this->x > (GBA_SCREEN_WIDTH - this->w)) this->x = GBA_SCREEN_WIDTH - this->w;
-        if(this->y > (GBA_SCREEN_HEIGHT - this->h)) this->y = GBA_SCREEN_HEIGHT - this->h;
+        if(this->y > (GBA_SCREEN_HEIGHT - this->h-20)) this->y = GBA_SCREEN_HEIGHT - this->h-20;
     }
 }
 

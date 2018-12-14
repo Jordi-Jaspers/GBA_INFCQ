@@ -21,15 +21,14 @@ All the code that is copied or used from other sources will be mentioned in the 
     -> Selection screen     -> Takes too much time (Start, Credits)  
 3.  Create the Battle_Scene  
     -> Add Sounds           -> Done!  
-    -> Add Sprites          -> Added Hero Sprite  
+    -> Add Sprites          -> Done!  
     -> Create background    -> Done!  
     -> Add background       -> Done! only need movement.   
     -> Implement Controls   -> Done! 
-    -> Collision Detection  -> not yet  
+    -> Collision Detection  -> Done! 
     -> Score System         -> not yet  
       
-4.  Create Ending Screen  
-    -> Go back to the Start Screen  
+4.  Create Ending Screen    -> Done! 
   
   
 #References:  

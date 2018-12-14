@@ -14,22 +14,20 @@
 #include "Object_Sprites_Shared.h"
 #include "Main_Scene_Background.h"
 
-SpriteBuilder<Sprite> builder;
-int textCounter;
-bool textBool;
+Environment envMain;
 
 std::vector<Sprite *> MainScene::sprites()
 {
     return {
-        Hero.get(),
-        Enemy.get()};
+        Hero.get()};
 }
 
 std::vector<Background *> MainScene::backgrounds()
 {
     return {
-        bgLevel.get(),
-        bgMoving.get()};
+        bgMoving.get(),
+        bgLevel.get()
+    };
 }
 
 void MainScene::load()
@@ -37,58 +35,59 @@ void MainScene::load()
     foregroundPalette = std::unique_ptr<ForegroundPaletteManager>(new ForegroundPaletteManager(Object_Sprites_Sharedpal, sizeof(Object_Sprites_Sharedpal)));
     backgroundPalette = std::unique_ptr<BackgroundPaletteManager>(new BackgroundPaletteManager(Main_Scene_BackgroundPal, sizeof(Main_Scene_BackgroundPal)));
 
-    CreateEnviroment();
+    envMain.CreateEnviroment();
+    engine -> disableText();
+
+    SpriteBuilder<Sprite> builder;
 
     Hero = builder
-               .withData(HeroTiles, sizeof(HeroTiles))
-               .withSize(SIZE_32_32)
-               .withAnimated(4, 5)
-               .withLocation(XStart, YLowerBound)
-               .withinBounds()
-               .buildPtr();
+        .withData(HeroTiles, sizeof(HeroTiles))
+        .withSize(SIZE_32_32)
+        .withAnimated(4, 5)
+        .withLocation(envMain.getXStart(), envMain.getYLowerBound())
+        .withinBounds()
+        .buildPtr();
     Hero->stopAnimating();
 
     engine->enqueueMusic(Main_Scene_Audio, Main_Scene_Audio_bytes, 88200);
 
-    bgLevel = std::unique_ptr<Background>(new Background(1, Main_Scene_BackgroundTiles, sizeof(Main_Scene_BackgroundTiles), Main_Scene_BackgroundMap, sizeof(Main_Scene_BackgroundMap)));
-    bgLevel.get()->useMapScreenBlock(16);
+    bgMoving = std::unique_ptr<Background>(new Background(3, Main_Scene_BackgroundTiles, sizeof(Main_Scene_BackgroundTiles), Main_Scene_Background1Map, sizeof(Main_Scene_Background1Map)));
+    bgMoving->useMapScreenBlock(16);
+    bgMoving->scroll(0, 0);
 
-    bgLevel->scroll(0, 95);
+    bgLevel = std::unique_ptr<Background>(new Background(1, Main_Scene_BackgroundTiles, sizeof(Main_Scene_BackgroundTiles), Main_Scene_BackgroundMap, sizeof(Main_Scene_BackgroundMap)));
+    bgLevel -> useMapScreenBlock(16);
+    bgLevel -> scroll(0, 95);
 }
 
 void MainScene::tick(u16 keys)
 {
+    scrollX += 0.5;
+    bgMoving->scroll(scrollX, 0);
+
     Hero->stopAnimating();
 
-    textCounter++;
-    if (textCounter == 100)
+    if (Hero->getY() >= envMain.getYLowerBound())
     {
-        TextStream::instance().clear();
-        textCounter = 0;
-        textBool = false;
+        envMain.setIsJumped(false);
+        envMain.setGravityOn(false);
+    }
+    else if (Hero->getY() <= envMain.getYHigherBound() && envMain.getIsJumped())
+    {
+        envMain.setGravityOn(true);
     }
 
-    if (Hero->getY() >= YLowerBound)
-    {
-        setIsJumped(false);
-        setGravityOn(false);
-    }
-    else if (Hero->getY() <= YHigherBound && getIsJumped())
-    {
-        setGravityOn(true);
-    }
-
-    if (getIsJumped() && !getGravityOn())
+    if (envMain.getIsJumped() && !envMain.getGravityOn())
     {
         Hero->animateToFrame(5);
         Hero->setVelocity(0, -2);
     }
-    else if (getGravityOn())
+    else if (envMain.getGravityOn())
     {
         Hero->animateToFrame(1);
         Hero->setVelocity(0, 2);
     }
-    else if (!gravityOn && !keys)
+    else if (!envMain.getGravityOn() && !keys)
     {
         Hero->animateToFrame(1);
         Hero->setVelocity(0, 0);
@@ -107,7 +106,7 @@ void MainScene::tick(u16 keys)
         Hero->flipHorizontally(false);
         Hero->animate();
 
-        if (Hero->getY() < YLowerBound)
+        if (Hero->getY() < envMain.getYLowerBound())
             Hero->setVelocity(-2, 2);
         else
             Hero->setVelocity(-2, 0);
@@ -118,7 +117,7 @@ void MainScene::tick(u16 keys)
         Hero->flipHorizontally(true);
         Hero->animate();
 
-        if (Hero->getY() < YLowerBound)
+        if (Hero->getY() < envMain.getYLowerBound())
             Hero->setVelocity(2, 2);
         else
             Hero->setVelocity(2, 0);
@@ -126,9 +125,9 @@ void MainScene::tick(u16 keys)
 
     else if (keys & KEY_UP)
     {
-        if (!getIsJumped())
+        if (!envMain.getIsJumped())
         {
-            setIsJumped(true);
+            envMain.setIsJumped(true);
             engine->enqueueSound(Jump_Audio, Jump_Audio_bytes, 88200);
             Hero->animateToFrame(5);
             Hero->setVelocity(0, -2);
@@ -139,11 +138,6 @@ void MainScene::tick(u16 keys)
     {
         engine->enqueueSound(Slash_Audio, Slash_Audio_bytes, 88200);
         Hero->animateToFrame(7);
-
-        if (!textBool)
-        {
-            TextStream::instance() << Hero->getX() << "&&" << Hero->getY(); //coordinate checker....
-            textBool = true;
-        }
+        TextStream::instance() << Hero->getX() << "&&" << Hero->getY(); //coordinate checker....
     }
 }

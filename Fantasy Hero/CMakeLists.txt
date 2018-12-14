@@ -3,22 +3,29 @@ project(Fantasy_Hero)
 add_executable(${PROJECT_NAME}.elf
         src/Battle_Scene_Audio.h
 		src/Battle_Scene_Background.h
-		src/Battle_Scene_Objects.h
-		src/Battle_Scene_Shared.h
+		src/Battle_Scene.cpp
 		src/Battle_Scene.h
 		src/Environment.h
-		src/Battle_Scene.cpp
 		src/Knight_Dance_Object.h
+		src/Main_Scene_Audio.h
+		src/Main_Scene_Background.h
+		src/End_Scene.cpp
+		src/End_Scene.h	
+		src/End_Scene_Audio.h		
+		src/Main_Scene.cpp
+		src/Main_Scene.h
 		src/main.cpp
-		src/Sound_Effect.h
-		src/Start_Scene_Shared.h
+		src/Object_Sprites_Shared.h
+		src/Object_Sprites.h
 		src/Press_Start_Object1.h
 		src/Press_Start_Object2.h
+		src/Sound_Effect.h
 		src/Stage_Start_Audio.h
 		src/Start_Scene_Audio.h
-		src/Start_Scene_Background.h
-        src/start_Scene.cpp
         src/start_Scene.h
+		src/Start_Scene_Shared.h
+        src/start_Scene.cpp
+		src/Start_Scene_Background.h
 		)
 
 target_link_libraries(${PROJECT_NAME}.elf gba-sprite-engine)

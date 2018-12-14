@@ -12,7 +12,7 @@ class MainScene : public Scene
     std::unique_ptr<Background> bgLevel;
     std::unique_ptr<Background> bgMoving;
     std::unique_ptr<Sprite> Hero;
-    std::unique_ptr<Sprite> Enemy;
+    //std::unique_ptr<Sprite> Enemy;
 
     int scrollX, scrollY;
 

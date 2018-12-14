@@ -1,3 +1,5 @@
+#ifndef OBJECT_SPRITES_H
+#define OBJECT_SPRITES_H
 
 //{{BLOCK(shared)
 
@@ -25,3 +27,5 @@ const unsigned short Object_Sprites_Sharedpal[54] __attribute__((aligned(4)))=
 };
 
 //}}BLOCK(shared)
+
+#endif

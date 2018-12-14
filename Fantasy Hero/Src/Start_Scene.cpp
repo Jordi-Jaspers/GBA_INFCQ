@@ -15,14 +15,8 @@
 #include "Knight_Dance_Object.h"
 #include "Start_Scene_Shared.h"	
 
-
 //include overgang naar volgende scene
 #include "Battle_Scene.h"
-#include "Battle_Scene_Background.h"
-
-//Testen
-#include "Main_Scene.h"
-#include "Main_Scene.cpp"
 
 std::vector<Background *> StartScene::backgrounds() {
     return { bg.get() };
@@ -57,7 +51,7 @@ void StartScene::load() {
         .withData(Knight_DanceTiles, sizeof(Knight_DanceTiles))
         .withSize(SIZE_16_32)
         .withAnimated(4, 25)
-        .withLocation(115, 75)
+        .withLocation(115, 65)
         .buildPtr();
 
     bg = std::unique_ptr<Background>(new Background(1, Start_Scene_BackgroundTiles, sizeof(Start_Scene_BackgroundTiles), Start_Scene_BackgroundMap, sizeof(Start_Scene_BackgroundMap)));
@@ -77,7 +71,8 @@ void StartScene::tick(u16 keys) {
 
         if(!engine->isTransitioning()) {
             engine->dequeueAllSounds();
-            engine->transitionIntoScene(new MainScene(engine), new FadeOutScene(2));
+            engine->transitionIntoScene(new BattleScene(engine), new FadeOutScene(2));
+            engine ->setTransition(false);
         }
 
     } else if(keys & KEY_LEFT) {
