@@ -20,6 +20,10 @@
 #include "Battle_Scene.h"
 #include "Battle_Scene_Background.h"
 
+//Testen
+#include "Main_Scene.h"
+#include "Main_Scene.cpp"
+
 std::vector<Background *> StartScene::backgrounds() {
     return { bg.get() };
 }
@@ -73,7 +77,7 @@ void StartScene::tick(u16 keys) {
 
         if(!engine->isTransitioning()) {
             engine->dequeueAllSounds();
-            engine->transitionIntoScene(new BattleScene(engine), new FadeOutScene(2));
+            engine->transitionIntoScene(new MainScene(engine), new FadeOutScene(2));
         }
 
     } else if(keys & KEY_LEFT) {

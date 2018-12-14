@@ -10,8 +10,8 @@
 #include "Sound_Effect.h"
 #include "Battle_Scene_Audio.h"
 #include "Battle_Scene_Background.h"
-#include "Battle_Scene_Shared.h"
-#include "Battle_Scene_Objects.h"
+#include "Object_Sprites_Shared.h"
+#include "Object_Sprites.h"
 #include "Environment.h"
 
 SpriteBuilder<Sprite> builder;
@@ -34,7 +34,7 @@ std::vector<Background *> BattleScene::backgrounds() {
 }
 
 void BattleScene::load() {
-    foregroundPalette = std::unique_ptr<ForegroundPaletteManager>(new ForegroundPaletteManager(sharedPal, sizeof(sharedPal)));
+    foregroundPalette = std::unique_ptr<ForegroundPaletteManager>(new ForegroundPaletteManager(Object_Sprites_Sharedpal, sizeof(Object_Sprites_Sharedpal)));
     backgroundPalette = std::unique_ptr<BackgroundPaletteManager>(new BackgroundPaletteManager(Battle_Scene_BackgroundPal, sizeof(Battle_Scene_BackgroundPal)));
 
     CreateEnviroment();
@@ -110,9 +110,25 @@ void BattleScene::checkSubStageObstacles()
     }
 
     if(Hero -> collidesWith(*Star) && Hero -> getX() >= 190 && Hero -> getX() <= 208){
-        if(!textBool)
-        TextStream::instance() << "Powerup Activated!";
+        if(!textBool){
+        TextStream::instance() << "Powerup Activated! Entering dream.....";
         textBool = true;
+        }
+
+        int timer;
+
+        if(Hero->collidesWith(*Star))
+            timer++;
+        else
+            timer = 0;
+
+         
+        if (!engine->isTransitioning() && timer == 100)
+        {
+            engine->dequeueAllSounds();
+            engine->transitionIntoScene(new BattleScene(engine), new FadeOutScene(2));
+            timer = 0;
+        }
     }
 
 }
