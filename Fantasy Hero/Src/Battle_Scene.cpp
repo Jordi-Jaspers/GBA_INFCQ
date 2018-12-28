@@ -11,15 +11,14 @@
 #include "Sound_Effect.h"
 #include "Battle_Scene_Audio.h"
 #include "Battle_Scene_Background.h"
-#include "Object_Sprites_Shared.h"
 #include "Object_Sprites.h"
-#include "Environment.h"
+#include "Battle_Environment.h"
 
 //include overgang naar volgende scene
 #include "Main_Scene.h"
 #include "End_Scene.h"
 
-Environment envBattle;
+Battle_Environment envBattle;
 
 int textCounter;
 int starCounter;

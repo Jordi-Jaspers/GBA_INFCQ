@@ -9,11 +9,7 @@
 #include "Start_Scene.h"
 #include "Start_Scene_Audio.h"
 #include "Start_Scene_Background.h"
-#include "Stage_Start_Audio.h"
-#include "Press_Start_Object1.h"
-#include "Press_Start_Object2.h"
-#include "Knight_Dance_Object.h"
-#include "Start_Scene_Shared.h"	
+#include "Start_Scene_Objects.h"
 
 //include overgang naar volgende scene
 #include "Battle_Scene.h"

@@ -12,9 +12,10 @@ class MainScene : public Scene
     std::unique_ptr<Background> bgLevel;
     std::unique_ptr<Background> bgMoving;
     std::unique_ptr<Sprite> Hero;
-    //std::unique_ptr<Sprite> Enemy;
+    std::unique_ptr<Sprite> Enemy;
+    std::unique_ptr<Sprite> Object;
 
-    float scrollX, scrollY;
+    float scrollX, scrollY, scrollLevel;
 
   public:
     explicit MainScene(std::shared_ptr<GBAEngine> engine);
@@ -23,8 +24,9 @@ class MainScene : public Scene
     std::vector<Sprite *> sprites() override;
     std::vector<Background *> backgrounds() override;
 
-    void checkMainStageObstacles();
-    void checkSubStageObstacles();
+    void checkEnvironment1();
+    void checkEnvironment2(u16 i);
+    void checkEnvironment3();
     void load() override;
     void tick(u16 i) override;
 };
