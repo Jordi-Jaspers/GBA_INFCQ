@@ -12,6 +12,7 @@
 #include "Main_Scene_Audio.h"
 #include "Object_Sprites.h"
 #include "Main_Scene_Background.h"
+#include "End_Scene.h"
 
 Main_Environment envMain;
 bool removeEnemy = true;
@@ -22,17 +23,19 @@ std::vector<Sprite *> MainScene::sprites(){
     std::vector<Sprite *> sprites;
     sprites.clear();
 
+    sprites.push_back(Hero.get());
+    if (!removeEnemy)
+    {
+        sprites.push_back(Enemy.get());
+    }
+
     for (auto &p : platforms)
     {
         sprites.push_back(p->getSprite());
     }
-
-    if(!removeEnemy){
-        sprites.push_back(Enemy.get());
-    }
-
     sprites.push_back(PlatformSprite.get());
-    sprites.push_back(Hero.get());
+
+
     return sprites;
 }
 
@@ -70,13 +73,12 @@ void MainScene::load()
         .buildPtr();
     Hero->stopAnimating();
 
-    Enemy = spriteBuilder -> withData(EnemyTiles, sizeof(EnemyTiles))
+    Enemy = spriteBuilder -> withData(HeroTiles, sizeof(HeroTiles))
         .withSize(SIZE_32_32)
-        .withAnimated(1, 4)
-        .withLocation(96, envMain.getYLowerBound())
+        .withAnimated(4, 5)
+        .withLocation(envMain.getXStart(), envMain.getYLowerBound())
         .withinBounds()
         .buildPtr();
-    Enemy->stopAnimating();
 
     engine->enqueueMusic(Main_Scene_Audio, Main_Scene_Audio_bytes, 88200);
 
@@ -86,6 +88,8 @@ void MainScene::load()
     //schakel BG 3 uit om te kunnen spelen.....
     bgMoving = std::unique_ptr<Background>(new Background(2, Main_Scene_BackgroundTiles, sizeof(Main_Scene_BackgroundTiles), Main_Scene_BackgroundMap, sizeof(Main_Scene_BackgroundMap)));
     bgMoving->useMapScreenBlock(16);
+
+    engine -> setTransition(false);
 }
 
 std::unique_ptr<Platform> MainScene::createPlatform(int xCo, int yCo){
@@ -121,6 +125,22 @@ void MainScene::checkEnvironment1()
             envMain.setBuildEnvironment(true);
             envMain.goToEnvironment2();
         }
+
+        // if(Hero -> getX() >= 54 && Hero -> getX() <= 86 && Hero -> getY() <= 108 && !engine->getTransition()){
+        //     engine->dequeueAllSounds();
+        //     engine->setTransition(true);
+
+        //     bgMoving->clearMap();
+        //     bgMoving->clearData();
+        //     bgLevel->clearMap();
+        //     bgLevel->clearData();
+
+        //     envMain.setDead(true);
+
+        //     removePlatforms();
+
+        //     engine->transitionIntoScene(new EndScene(engine), new FadeOutScene(2));
+        // }
     }
 }
 
@@ -162,6 +182,7 @@ void MainScene::checkEnvironment3(){
     if(envMain.getEnvironment3()){
         if(envMain.getBuildEnvironment()){
             removePlatforms();
+            removeEnemy = false;
             engine->updateSpritesInScene();
             envMain.setBuildEnvironment(false);
         }
@@ -184,6 +205,7 @@ void MainScene::checkEnvironment3(){
             Hero->moveTo(Hero -> getX(), Hero->getY());
             bgMoving -> updateMap(Main_Scene_BackgroundMap);
             envMain.setBuildEnvironment(true);
+            removeEnemy = true;
             envMain.goToEnvironment2();
         }
     }

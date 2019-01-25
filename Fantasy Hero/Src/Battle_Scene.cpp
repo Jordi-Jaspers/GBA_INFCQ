@@ -112,7 +112,7 @@ void BattleScene::checkMainStageObstacles(){
             removePlatform = true;
         }
 
-        if (Hero->getY() <= envBattle.getYHigherBound() && !engine->getTransition())
+        if (Hero->getY() <= envBattle.getYHigherBound() && !engine->isTransitioning())
         {
             if (Hero->getX() >= 45 && Hero->getX() <= 70 || Hero->getX() >= 80 && Hero->getX() <= 100 || Hero->getX() >= 110 && Hero->getX() <= 135){
                 engine->dequeueAllSounds();
@@ -125,7 +125,7 @@ void BattleScene::checkMainStageObstacles(){
                 envBattle.setDead(true);
                 removePlatform = true;
 
-                engine->transitionIntoScene(new EndScene(engine), new FadeOutScene(1));
+                engine->transitionIntoScene(new EndScene(engine), new FadeOutScene(2));
             }
         }
     }
@@ -150,7 +150,8 @@ void BattleScene::checkSubStageObstacles()
             if (!textBool && starCounter >= 30)
             {
                 TextStream::instance() << "by touching the star";
-                TextStream::instance() << "you started remembering something...";
+                TextStream::instance() << "you started remembering";
+                TextStream::instance() << "something...";
                 textBool = true;
             }
 

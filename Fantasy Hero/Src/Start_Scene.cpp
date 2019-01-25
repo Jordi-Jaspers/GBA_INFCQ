@@ -68,7 +68,7 @@ void StartScene::tick(u16 keys) {
         if(!engine->isTransitioning()) {
             engine->dequeueAllSounds();
             engine->transitionIntoScene(new BattleScene(engine), new FadeOutScene(2));
-            engine ->setTransition(false);
+            engine->setTransition(false);
         }
 
     } else if(keys & KEY_LEFT) {

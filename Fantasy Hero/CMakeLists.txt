@@ -16,6 +16,7 @@ add_executable(${PROJECT_NAME}.elf
 		src/Main_Environment.h
 		src/main.cpp
 		src/Object_Sprites.h
+		src/Platforms.h
 		src/Sound_Effect.h
 		src/Start_Scene_Audio.h
         src/start_Scene.h

@@ -7,10 +7,13 @@ Jordi Jaspers
 #GBA_INFCQ [Biography]:  
 This repository contains the GBA-Project for the course [INFCQ] 2018-2019. The Game is a combination between Final Fantasy and mario sprites.  
 You can move between different stages and kill enemies. There is a working ending screen and a splash screen at the beginning.  
-not quite a fatastic game but I tried.    
+not quite a fatastic game but I tried. TURN OF BACKGROUND LAYER 3 TO PLAY THE GAME!  
 
-TURN OF BACKGROUND LAYER 3 TO PLAY THE GAME!  
-  
+ERRORS WITHING THE GAME:  
+because there is still something wrong with the implementation of 2 backgrounds at the same time.  
+the next scene cant load or there are some bad pixels withing the game itself. That is also  
+also the reason why I commented that BG3 has to be of in order to play the game with minimal errors.  
+   
 DISCLAIMER:  
 All the code that is copied or used from other sources will be mentioned in the reference section of this file.  
   

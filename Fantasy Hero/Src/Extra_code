@@ -1,0 +1,41 @@
+       if (Hero->getX() <= 54 && Hero->getX() <= 70 && Hero->getY() >= envMain.getYLowerBound())
+        {
+            envMain.setOnSurface();
+        }
+
+        if (Hero->getX() <= 102 && Hero->getX() <= 118 && Hero->getY() >= envMain.getYLowerBound())
+        {
+            envMain.setOnSurface();
+        }
+
+        if (Hero->collidesWith(*platforms.at(1)->getSprite()) && Hero->getY() >= envMain.getYHigherBound() + 15 && Hero->getX() >= 54 && Hero->getX() <= 70)
+        {
+            envMain.setOnPlatform1();
+            Hero -> moveTo(Hero->getX(), envMain.getYLowerBound());
+        }
+        else if (Hero->collidesWith(*platforms.at(1) -> getSprite()) && Hero->getY() >= envMain.getYLowerBound())
+        {
+            Hero->moveTo(50, envMain.getYLowerBound());
+        }
+
+        if (Hero->collidesWith(*platforms.at(2) -> getSprite()) && Hero->getY() >= envMain.getYHigherBound() + 15 && Hero->getX() >= 102 && Hero->getX() <= 118)
+        {
+            envMain.setOnPlatform1();
+            Hero->moveTo(Hero->getX(), envMain.getYLowerBound());
+        }
+        else if (Hero->collidesWith(*platforms.at(2) -> getSprite()) && Hero->getY() >= envMain.getYLowerBound())
+        {   
+            envMain.setOnSurface();
+            Hero->moveTo(100, envMain.getYLowerBound());
+        }
+
+        if (Hero->collidesWith(*platforms.at(3)->getSprite()) && Hero->getY() >= envMain.getYHigherBound() + 15 && Hero->getX() >= 166 && Hero->getX() <= 182)
+        {
+            envMain.setOnPlatform1();
+            Hero->moveTo(Hero->getX(), envMain.getYLowerBound());
+        }
+        else if (Hero->collidesWith(*platforms.at(3)->getSprite()) && Hero->getY() >= envMain.getYLowerBound())
+        {
+            envMain.setOnSurface();
+            Hero->moveTo(164, envMain.getYLowerBound());
+        }
