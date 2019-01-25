@@ -34,7 +34,7 @@ class MainScene : public Scene
 
     void checkEnvironment1();
     void checkEnvironment2(u16 i);
-    void checkEnvironment3();
+    void checkEnvironment3(u16 i);
     void load() override;
     void tick(u16 i) override;
 };

@@ -79,6 +79,7 @@ void MainScene::load()
         .withLocation(96, envMain.getYLowerBound())
         .withinBounds()
         .buildPtr();
+    Enemy -> flipHorizontally(true);  //werkt precies ook niet meer....  
 
     engine->enqueueMusic(Main_Scene_Audio, Main_Scene_Audio_bytes, 88200);
 
@@ -198,13 +199,18 @@ void MainScene::checkEnvironment2(u16 keys){
     }
 }
 
-void MainScene::checkEnvironment3(){
+void MainScene::checkEnvironment3(u16 keys){
     if(envMain.getEnvironment3()){
         if(envMain.getBuildEnvironment()){
             removePlatforms();
             removeEnemy = false;
             engine->updateSpritesInScene();
             envMain.setBuildEnvironment(false);
+        }
+
+        if(Hero -> collidesWith(*Enemy) && keys & KEY_A){
+            removeEnemy = true;
+            engine->updateSpritesInScene();
         }
 
         if (Hero->getX() < 200 && scrollLevel >= 0)
@@ -238,7 +244,7 @@ void MainScene::tick(u16 keys)
     scrollX += 0.5;
     bgMoving->scroll(scrollX, scrollY);
 
-    checkEnvironment3();
+    checkEnvironment3(keys);
     checkEnvironment2(keys);
     checkEnvironment1();
 

@@ -8,6 +8,10 @@ Jordi Jaspers
 This repository contains the GBA-Project for the course [INFCQ] 2018-2019. The Game is a combination between Final Fantasy and mario sprites.  
 You can move between different stages and kill enemies. There is a working ending screen and a splash screen at the beginning.  
 not quite a fatastic game but I tried. TURN OF BACKGROUND LAYER 3 TO PLAY THE GAME!  
+  
+the hero can attack by using the "A-key" on the gameboy. there is gravity and collision detection.  
+Interact with the star for 5 seconds to go to the next level. walk all the way till the end.   
+At the green pipe use the arrow down key to get to the boss level.  
 
 ERRORS WITHING THE GAME:  
 because there is still something wrong with the implementation of 2 backgrounds at the same time.  
@@ -17,6 +21,9 @@ also the reason why I commented that BG3 has to be of in order to play the game 
 I put some code in a file calles "Extra code" because that was all the collision detection code.  
 but because of the weird background errors. the code doesnt work fully in the game. the game itself becomes   
 realy slow and glitchy when it is used.
+
+I used another sprite with the exact same measurements as the hero but the sprite didn't load correctly.  
+Horizontal flipping doens't work anymore in the last scene... very weird.  
    
 DISCLAIMER:  
 All the code that is copied or used from other sources will be mentioned in the reference section of this file.  
