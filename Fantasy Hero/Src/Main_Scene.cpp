@@ -158,7 +158,7 @@ void MainScene::checkEnvironment2(u16 keys){
             envMain.setBuildEnvironment(false);
         }
 
-        if(Hero -> getX() >= 102 && Hero -> getY() >= envMain.getYLowerBound){
+        if(Hero -> getX() >= 102 && Hero -> getY() >= envMain.getYLowerBound()){
             envMain.setOnSurface();
         }
 
