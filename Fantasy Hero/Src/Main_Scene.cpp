@@ -158,6 +158,10 @@ void MainScene::checkEnvironment2(u16 keys){
             envMain.setBuildEnvironment(false);
         }
 
+        if(Hero -> getX() >= 102 && Hero -> getY() >= envMain.getYLowerBound){
+            envMain.setOnSurface();
+        }
+
         if(Hero -> getX() <= envMain.getXLeftBound() + 5){
             bgLevel->updateMap(Main_Scene_Background1Map);
             bgLevel->scroll(10, 5);
