@@ -162,6 +162,22 @@ void MainScene::checkEnvironment2(u16 keys){
             envMain.setOnSurface();
         }
 
+        // if(Hero -> getX() >= 54 && Hero -> getX() <= 86 && Hero -> getY() <= 108 && !engine->getTransition()){
+        //     engine->dequeueAllSounds();
+        //     engine->setTransition(true);
+
+        //     bgMoving->clearMap();
+        //     bgMoving->clearData();
+        //     bgLevel->clearMap();
+        //     bgLevel->clearData();
+
+        //     envMain.setDead(true);
+
+        //     removePlatforms();
+
+        //     engine->transitionIntoScene(new EndScene(engine), new FadeOutScene(2));
+        // }
+
         if(Hero -> getX() <= envMain.getXLeftBound() + 5){
             bgLevel->updateMap(Main_Scene_Background1Map);
             bgLevel->scroll(10, 5);
