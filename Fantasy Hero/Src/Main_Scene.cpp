@@ -14,7 +14,6 @@
 #include "Main_Scene_Background.h"
 
 Main_Environment envMain;
-bool removeData = false;
 bool removeEnemy = true;
 
 MainScene::MainScene(const std::shared_ptr<GBAEngine> engine) : Scene(engine), scrollX(0), scrollY(0), scrollLevel(0) {}
@@ -42,8 +41,8 @@ std::vector<Background *> MainScene::backgrounds()
     std::vector<Background *> bgs;
     bgs.clear();
 
-    bgs.push_back(bgLevel.get());
     bgs.push_back(bgMoving.get());
+    bgs.push_back(bgLevel.get());
 
     return bgs;
 }
@@ -129,10 +128,12 @@ void MainScene::checkEnvironment2(u16 keys){
     if(envMain.getEnvironment2()){
         if (envMain.getBuildEnvironment()){
             removePlatforms();
-            platforms.push_back(createPlatform(54, envMain.getYLowerBound() + 15));
-            platforms.push_back(createPlatform(70, envMain.getYLowerBound() + 15 - 16));
-            platforms.push_back(createPlatform(86, envMain.getYLowerBound() + 15 - 16));
-            platforms.push_back(createPlatform(102, envMain.getYLowerBound() + 15));
+            platforms.push_back(createPlatform(6, envMain.getYLowerBound() + 15 - 48));
+            platforms.push_back(createPlatform(22, envMain.getYLowerBound() + 15 - 48));
+            platforms.push_back(createPlatform(38, envMain.getYLowerBound() + 15 - 48));
+            platforms.push_back(createPlatform(54, envMain.getYLowerBound() + 15 - 48));
+            platforms.push_back(createPlatform(70, envMain.getYLowerBound() + 15 - 48));
+            platforms.push_back(createPlatform(86, envMain.getYLowerBound() + 15 - 48));
             engine->updateSpritesInScene();
             envMain.setBuildEnvironment(false);
         }
