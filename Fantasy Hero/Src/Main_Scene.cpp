@@ -76,7 +76,7 @@ void MainScene::load()
     Enemy = spriteBuilder -> withData(HeroTiles, sizeof(HeroTiles))
         .withSize(SIZE_32_32)
         .withAnimated(4, 5)
-        .withLocation(envMain.getXStart(), envMain.getYLowerBound())
+        .withLocation(96, envMain.getYLowerBound())
         .withinBounds()
         .buildPtr();
 

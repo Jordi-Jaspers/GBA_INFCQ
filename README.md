@@ -12,7 +12,11 @@ not quite a fatastic game but I tried. TURN OF BACKGROUND LAYER 3 TO PLAY THE GA
 ERRORS WITHING THE GAME:  
 because there is still something wrong with the implementation of 2 backgrounds at the same time.  
 the next scene cant load or there are some bad pixels withing the game itself. That is also  
-also the reason why I commented that BG3 has to be of in order to play the game with minimal errors.  
+also the reason why I commented that BG3 has to be of in order to play the game with minimal errors.
+
+I put some code in a file calles "Extra code" because that was all the collision detection code.  
+but because of the weird background errors. the code doesnt work fully in the game. the game itself becomes   
+realy slow and glitchy when it is used.
    
 DISCLAIMER:  
 All the code that is copied or used from other sources will be mentioned in the reference section of this file.  
@@ -26,7 +30,8 @@ All the code that is copied or used from other sources will be mentioned in the 
     -> Add Background       -> Done!  
     -> Change Font Color    -> Done!  
     -> Selection screen     -> Takes too much time (Start, Credits)  
-3.  Create the Battle_Scene  
+      
+3.  Create the Battle_Scene && Main_Scene  
     -> Add Sounds           -> Done!  
     -> Add Sprites          -> Done!  
     -> Create background    -> Done!  
@@ -35,7 +40,7 @@ All the code that is copied or used from other sources will be mentioned in the 
     -> Collision Detection  -> Done! 
     -> Score System         -> not yet
     -> created 2nd scene    -> Done!
-    -> double moving scene  -> Done! don't know why there are ugly bits on the first bg layer. don't use it.....  
+    -> double moving scene  -> Done! don't know why there are ugly bits on the second bg layer. don't use it.....  
       
 4.  Create Ending Screen    -> Done! 
   
