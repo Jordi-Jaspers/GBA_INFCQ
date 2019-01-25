@@ -5,6 +5,7 @@
 #include <libgba-sprite-engine/sprites/affine_sprite.h>
 #include <libgba-sprite-engine/scene.h>
 #include <libgba-sprite-engine/background/background.h>
+#include "Platform.h"
 
 class MainScene : public Scene
 {
@@ -14,6 +15,14 @@ class MainScene : public Scene
     std::unique_ptr<Sprite> Hero;
     std::unique_ptr<Sprite> Enemy;
     std::unique_ptr<Sprite> Object;
+    std::unique_ptr<Sprite> PlatformSprite;
+    
+    std::vector<std::unique_ptr<Platform>> platforms;
+
+    std::unique_ptr<SpriteBuilder<Sprite>> spriteBuilder;
+    std::unique_ptr<Platform> createPlatform(int xCo, int yCo);
+    
+    void removePlatforms();
 
     float scrollX, scrollY, scrollLevel;
 
@@ -23,7 +32,7 @@ class MainScene : public Scene
 
     std::vector<Sprite *> sprites() override;
     std::vector<Background *> backgrounds() override;
-
+    
     void checkEnvironment1();
     void checkEnvironment2(u16 i);
     void checkEnvironment3();

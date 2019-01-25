@@ -14,7 +14,7 @@
 #include "Main_Scene_Background.h"
 
 Main_Environment envMain;
-bool removeData = false;
+bool removeData = true;
 bool removeEnemy = true;
 
 MainScene::MainScene(const std::shared_ptr<GBAEngine> engine) : Scene(engine), scrollX(0), scrollY(0), scrollLevel(0) {}
@@ -22,6 +22,11 @@ MainScene::MainScene(const std::shared_ptr<GBAEngine> engine) : Scene(engine), s
 std::vector<Sprite *> MainScene::sprites(){
     std::vector<Sprite *> sprites;
     sprites.clear();
+
+    for (auto &p : platforms)
+    {
+        sprites.push_back(p->getSprite());
+    }
 
     if(!removeData){
         sprites.push_back(Object.get());
@@ -34,7 +39,16 @@ std::vector<Sprite *> MainScene::sprites(){
     return sprites;
 }
 
-std::vector<Background *> MainScene::backgrounds(){return {bgMoving.get(), bgLevel.get()};}
+std::vector<Background *> MainScene::backgrounds()
+{
+    std::vector<Background *> bgs;
+    bgs.clear();
+
+    bgs.push_back(bgLevel.get());
+    bgs.push_back(bgMoving.get());
+
+    return bgs;
+}
 
 void MainScene::load()
 {
@@ -44,16 +58,19 @@ void MainScene::load()
     envMain.CreateEnvironment();
     engine -> disableText();
 
-    SpriteBuilder<Sprite> builder;
+    spriteBuilder = std::unique_ptr<SpriteBuilder<Sprite>>(new SpriteBuilder<Sprite>);
 
-    Object = builder
-    .withData(Platform_DoubleTiles, sizeof(Platform_DoubleTiles))
-    .withSize(SIZE_32_16)
-    .withLocation(48, envMain.getYLowerBound() + 14)
+    Object = spriteBuilder -> withData(Platform_SingleTiles, sizeof(Platform_SingleTiles))
+    .withSize(SIZE_16_16)
+    .withLocation(54, envMain.getYLowerBound() + 15)
     .buildPtr();
 
-    Hero = builder
-        .withData(HeroTiles, sizeof(HeroTiles))
+    PlatformSprite = spriteBuilder-> withData(Platform_SingleTiles, sizeof(Platform_SingleTiles))
+    .withSize(SIZE_16_16)
+    .withLocation(0, envMain.getYLowerBound() + 15)
+    .buildPtr();
+
+    Hero = spriteBuilder -> withData(HeroTiles, sizeof(HeroTiles))
         .withSize(SIZE_32_32)
         .withAnimated(4, 5)
         .withLocation(envMain.getXStart(), envMain.getYLowerBound())
@@ -61,8 +78,7 @@ void MainScene::load()
         .buildPtr();
     Hero->stopAnimating();
 
-    Enemy = builder
-        .withData(EnemyTiles, sizeof(EnemyTiles))
+    Enemy = spriteBuilder -> withData(EnemyTiles, sizeof(EnemyTiles))
         .withSize(SIZE_32_32)
         .withAnimated(1, 4)
         .withLocation(96, envMain.getYLowerBound())
@@ -80,14 +96,35 @@ void MainScene::load()
     bgMoving->useMapScreenBlock(16);
 }
 
+std::unique_ptr<Platform> MainScene::createPlatform(int xCo, int yCo){
+    return std::unique_ptr<Platform>(
+        new Platform(spriteBuilder -> withLocation(xCo, yCo)
+                                     .buildWithDataOf(*PlatformSprite.get())));
+}
+
+void MainScene::removePlatforms(){
+    platforms.erase(platforms.begin(), platforms.end());
+}
+
 void MainScene::checkEnvironment1()
 {
     if(envMain.getEnvironment1()){
+        if(envMain.getBuildEnvironment()){
+            removePlatforms();
+            platforms.push_back(createPlatform(54, envMain.getYLowerBound() + 15));
+            platforms.push_back(createPlatform(70, envMain.getYLowerBound() + 15 - 16));
+            platforms.push_back(createPlatform(86, envMain.getYLowerBound() + 15 - 16));
+            platforms.push_back(createPlatform(102, envMain.getYLowerBound() + 15));
+            engine->updateSpritesInScene();
+            envMain.setBuildEnvironment(false);
+        }
+
         bgLevel->scroll(10, 5);
         if(Hero -> getX() >= envMain.getXRightBound() - 5){
             bgLevel -> updateMap(Main_Scene_Background2Map);
             bgLevel -> scroll(10, 5);
             Hero -> moveTo(envMain.getXStart() + 7, Hero -> getY());
+            envMain.setBuildEnvironment(true);
             envMain.goToEnvironment2();
         }
     }
@@ -95,10 +132,21 @@ void MainScene::checkEnvironment1()
 
 void MainScene::checkEnvironment2(u16 keys){
     if(envMain.getEnvironment2()){
+        if (envMain.getBuildEnvironment()){
+            removePlatforms();
+            platforms.push_back(createPlatform(54, envMain.getYLowerBound() + 15));
+            platforms.push_back(createPlatform(70, envMain.getYLowerBound() + 15 - 16));
+            platforms.push_back(createPlatform(86, envMain.getYLowerBound() + 15 - 16));
+            platforms.push_back(createPlatform(102, envMain.getYLowerBound() + 15));
+            engine->updateSpritesInScene();
+            envMain.setBuildEnvironment(false);
+        }
+
         if(Hero -> getX() <= envMain.getXLeftBound() + 5){
             bgLevel->updateMap(Main_Scene_Background1Map);
             bgLevel->scroll(10, 5);
             Hero -> moveTo(envMain.getXRightBound() - 7, Hero -> getY());
+            envMain.setBuildEnvironment(true);
             envMain.goToEnvironment1();
         }
 
@@ -108,6 +156,7 @@ void MainScene::checkEnvironment2(u16 keys){
             bgLevel->scroll(scrollLevel, 5);
             Hero->moveTo(envMain.getXRightBound(), envMain.getYLowerBound());
             bgMoving -> clearMap();
+            envMain.setBuildEnvironment(true);
             envMain.goToEnvironment3();
         }
     }
@@ -115,6 +164,16 @@ void MainScene::checkEnvironment2(u16 keys){
 
 void MainScene::checkEnvironment3(){
     if(envMain.getEnvironment3()){
+        if(envMain.getBuildEnvironment()){
+            removePlatforms();
+            platforms.push_back(createPlatform(54, envMain.getYLowerBound() + 15));
+            platforms.push_back(createPlatform(70, envMain.getYLowerBound() + 15 - 16));
+            platforms.push_back(createPlatform(86, envMain.getYLowerBound() + 15 - 16));
+            platforms.push_back(createPlatform(102, envMain.getYLowerBound() + 15));
+            engine->updateSpritesInScene();
+            envMain.setBuildEnvironment(false);
+        }
+
         if (Hero->getX() < 200 && scrollLevel >= 0)
         {
             scrollLevel -= 1;
@@ -132,6 +191,7 @@ void MainScene::checkEnvironment3(){
             bgLevel->scroll(10, 5);
             Hero->moveTo(Hero -> getX(), Hero->getY());
             bgMoving -> updateMap(Main_Scene_BackgroundMap);
+            envMain.setBuildEnvironment(true);
             envMain.goToEnvironment2();
         }
     }
@@ -139,8 +199,7 @@ void MainScene::checkEnvironment3(){
 
 void MainScene::tick(u16 keys)
 {
-    engine -> updateSpritesInScene();
-    Hero->stopAnimating();
+    Hero -> stopAnimating();
 
     scrollX += 0.5;
     bgMoving->scroll(scrollX, scrollY);

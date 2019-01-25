@@ -5,7 +5,11 @@ Jordi Jaspers
 16/11/2018  
   
 #GBA_INFCQ [Biography]:  
-This repository contains the GBA-Project for the course [INFCQ] 2018-2019. The game is turn-based RPG game like final fantasy 4 advance.  
+This repository contains the GBA-Project for the course [INFCQ] 2018-2019. The Game is a combination between Final Fantasy and mario sprites.  
+You can move between different stages and kill enemies. There is a working ending screen and a splash screen at the beginning.  
+not quite a fatastic game but I tried.    
+
+TURN OF BACKGROUND LAYER 3 TO PLAY THE GAME!  
   
 DISCLAIMER:  
 All the code that is copied or used from other sources will be mentioned in the reference section of this file.  

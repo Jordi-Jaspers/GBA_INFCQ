@@ -15,6 +15,7 @@ class Main_Environment
     bool onPlatform2;
     bool onPlatform3;
 
+    bool buildEnvironment;
     bool Environment1;
     bool Environment2;
     bool Environment3;
@@ -27,6 +28,8 @@ class Main_Environment
   public:
     void CreateEnvironment()
     {
+        buildEnvironment = true;
+
         onPlatform1 = false;
         onPlatform2 = false;
         onPlatform3 = false;
@@ -217,6 +220,16 @@ class Main_Environment
     bool getDead()
     {
         return dead;
+    }
+
+    void setBuildEnvironment(bool boolean)
+    {
+        buildEnvironment = boolean;
+    }
+
+    bool getBuildEnvironment()
+    {
+        return buildEnvironment;
     }
 };
 
