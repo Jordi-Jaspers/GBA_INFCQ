@@ -14,7 +14,6 @@ class MainScene : public Scene
     std::unique_ptr<Background> bgMoving;
     std::unique_ptr<Sprite> Hero;
     std::unique_ptr<Sprite> Enemy;
-    std::unique_ptr<Sprite> Object;
     std::unique_ptr<Sprite> PlatformSprite;
     
     std::vector<std::unique_ptr<Platform>> platforms;
@@ -32,7 +31,7 @@ class MainScene : public Scene
 
     std::vector<Sprite *> sprites() override;
     std::vector<Background *> backgrounds() override;
-    
+
     void checkEnvironment1();
     void checkEnvironment2(u16 i);
     void checkEnvironment3();

@@ -14,7 +14,7 @@
 #include "Main_Scene_Background.h"
 
 Main_Environment envMain;
-bool removeData = true;
+bool removeData = false;
 bool removeEnemy = true;
 
 MainScene::MainScene(const std::shared_ptr<GBAEngine> engine) : Scene(engine), scrollX(0), scrollY(0), scrollLevel(0) {}
@@ -28,13 +28,11 @@ std::vector<Sprite *> MainScene::sprites(){
         sprites.push_back(p->getSprite());
     }
 
-    if(!removeData){
-        sprites.push_back(Object.get());
-    }
     if(!removeEnemy){
         sprites.push_back(Enemy.get());
     }
 
+    sprites.push_back(PlatformSprite.get());
     sprites.push_back(Hero.get());
     return sprites;
 }
@@ -60,14 +58,9 @@ void MainScene::load()
 
     spriteBuilder = std::unique_ptr<SpriteBuilder<Sprite>>(new SpriteBuilder<Sprite>);
 
-    Object = spriteBuilder -> withData(Platform_SingleTiles, sizeof(Platform_SingleTiles))
-    .withSize(SIZE_16_16)
-    .withLocation(54, envMain.getYLowerBound() + 15)
-    .buildPtr();
-
     PlatformSprite = spriteBuilder-> withData(Platform_SingleTiles, sizeof(Platform_SingleTiles))
     .withSize(SIZE_16_16)
-    .withLocation(0, envMain.getYLowerBound() + 15)
+    .withLocation(-GBA_SCREEN_WIDTH, -GBA_SCREEN_HEIGHT)
     .buildPtr();
 
     Hero = spriteBuilder -> withData(HeroTiles, sizeof(HeroTiles))
@@ -112,9 +105,11 @@ void MainScene::checkEnvironment1()
         if(envMain.getBuildEnvironment()){
             removePlatforms();
             platforms.push_back(createPlatform(54, envMain.getYLowerBound() + 15));
-            platforms.push_back(createPlatform(70, envMain.getYLowerBound() + 15 - 16));
-            platforms.push_back(createPlatform(86, envMain.getYLowerBound() + 15 - 16));
             platforms.push_back(createPlatform(102, envMain.getYLowerBound() + 15));
+            platforms.push_back(createPlatform(166, envMain.getYLowerBound() + 15));
+            platforms.push_back(createPlatform(182, envMain.getYLowerBound() + 15 - 16));
+            platforms.push_back(createPlatform(198, envMain.getYLowerBound() + 15 - 32));
+            platforms.push_back(createPlatform(214, envMain.getYLowerBound() + 15 - 48));
             engine->updateSpritesInScene();
             envMain.setBuildEnvironment(false);
         }
@@ -166,10 +161,6 @@ void MainScene::checkEnvironment3(){
     if(envMain.getEnvironment3()){
         if(envMain.getBuildEnvironment()){
             removePlatforms();
-            platforms.push_back(createPlatform(54, envMain.getYLowerBound() + 15));
-            platforms.push_back(createPlatform(70, envMain.getYLowerBound() + 15 - 16));
-            platforms.push_back(createPlatform(86, envMain.getYLowerBound() + 15 - 16));
-            platforms.push_back(createPlatform(102, envMain.getYLowerBound() + 15));
             engine->updateSpritesInScene();
             envMain.setBuildEnvironment(false);
         }
