@@ -350,8 +350,16 @@ void MainScene::checkEnvironment3(u16 keys){
         }
 
         if(Hero -> getX() >= envMain.getXRightBound() && envMain.getIsJumped()){
-
-            if(removeEnemy){
+            if(!removeEnemy){
+                bgLevel->updateMap(Main_Scene_Background2Map);
+                bgLevel->scroll(10, 5);
+                Hero->moveTo(Hero -> getX(), Hero->getY());
+                bgMoving -> updateMap(Moving_Background2Map);
+                envMain.setBuildEnvironment(true);
+                removeEnemy = true;
+                envMain.goToEnvironment2();
+                }
+            }else{
                 if(!engine->getTransition()){
                 engine->dequeueAllSounds();
                 engine->setTransition(true);
@@ -366,15 +374,6 @@ void MainScene::checkEnvironment3(u16 keys){
                 removePlatforms();
 
                 engine->transitionIntoScene(new EndScene(engine), new FadeOutScene(2));
-                }
-            }else{
-                bgLevel->updateMap(Main_Scene_Background2Map);
-                bgLevel->scroll(10, 5);
-                Hero->moveTo(Hero -> getX(), Hero->getY());
-                bgMoving -> updateMap(Moving_Background2Map);
-                envMain.setBuildEnvironment(true);
-                removeEnemy = true;
-                envMain.goToEnvironment2();
             }
         }
     }
