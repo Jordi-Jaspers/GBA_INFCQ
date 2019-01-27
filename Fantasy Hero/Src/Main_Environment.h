@@ -137,7 +137,7 @@ class Main_Environment
         if (!onPlatform1)
         {
             YHigherBound = 62;
-            YLowerBound = 90;
+            YLowerBound = 92;
             onPlatform1 = true;
         }
     }

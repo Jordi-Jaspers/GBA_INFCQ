@@ -1,20 +1,17 @@
 STATUS: Validatating gr.
 WARNING:   No explicit src path.
 STATUS: Validation succeeded.
-STATUS: Started run at: 2018-12-18, 15:05:03
+STATUS: Started run at: 2019-01-27, 16:06:08
 STATUS: Validatating gr.
 STATUS: Validation succeeded.
 STATUS: Preparing data.
 STATUS: Work-DIB creation.
-WARNING:   converting from 24 bpp to 8 bpp.
-STATUS: Work-DIB creation complete: 96x96@8.
+STATUS: Work-DIB creation complete: 32x40@8.
 STATUS: Tile preparation.
 STATUS:   tiling to 8x8 tiles.
 STATUS: Tile preparation complete.
 STATUS: Graphics preparation.
 STATUS: Graphics preparation complete.
-STATUS: Palette preparation.
-STATUS: Palette preparation complete.
 STATUS: Data preparation complete.
-STATUS: Export to C: Main_Scene_Background_Tiles into C:\Users\Jordi Jaspers\Google Drive\UHasselt\3de Aca. Bachelor IIW\Softwareontwerp met C & C++\GBA_INFCQ\Fantasy Hero\Sprites\Main Scene Objects\Main_Scene_Background_Tiles.c .
+STATUS: Export to C: Wolkjes into C:\Users\Jordi Jaspers\Google Drive\UHasselt\3de Aca. Bachelor IIW\Softwareontwerp met C & C++\GBA_INFCQ\Fantasy Hero\Sprites\Main Scene Objects\Wolkjes.c .
 STATUS: Run completed :).

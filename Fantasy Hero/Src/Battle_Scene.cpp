@@ -112,7 +112,7 @@ void BattleScene::checkMainStageObstacles(){
             removePlatform = true;
         }
 
-        if (Hero->getY() <= envBattle.getYHigherBound() && !engine->isTransitioning())
+        if (Hero->getY() <= envBattle.getYHigherBound() && !engine->getTransition())
         {
             if (Hero->getX() >= 45 && Hero->getX() <= 70 || Hero->getX() >= 80 && Hero->getX() <= 100 || Hero->getX() >= 110 && Hero->getX() <= 135){
                 engine->dequeueAllSounds();
