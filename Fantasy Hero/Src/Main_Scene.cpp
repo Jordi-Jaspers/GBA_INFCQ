@@ -20,7 +20,6 @@ int textCounter1;
 
 bool textBool1;
 bool removeEnemy = true;
-bool removePlatform = true;
 bool platformSwitch;
 
 MainScene::MainScene(const std::shared_ptr<GBAEngine> engine) : Scene(engine), scrollX(0), scrollY(0), scrollLevel(0) {}
@@ -30,10 +29,7 @@ std::vector<Sprite *> MainScene::sprites(){
     sprites.clear();
 
     if(envMain.getEnvironment1()){
-        if(!removePlatform){
-            sprites.push_back(PlatformSprite.get());
-        }
-
+        sprites.push_back(PlatformSprite.get());
         for (auto &p : platforms)
         {
             sprites.push_back(p->getSprite());
@@ -166,18 +162,7 @@ void MainScene::checkEnvironment1()
             if(Hero -> getX() >= 54 && Hero -> getX() <= 86 && Hero -> getY() >= 108 && !engine->getTransition()){
                 engine->dequeueAllSounds();
                 engine->setTransition(true);
-
-                bgMoving->clearMap();
-                bgMoving->clearData();
-                bgLevel->clearMap();
-                bgLevel->clearData();
-
                 envMain.setDead(true);
-
-                removePlatforms();
-                removePlatform = true;
-                engine->updateSpritesInScene();
-
                 engine->transitionIntoScene(new EndScene(engine), new FadeOutScene(2));
             }
 
@@ -326,7 +311,7 @@ void MainScene::checkEnvironment2(u16 keys){
             scrollLevel = 25;
             bgLevel->scroll(scrollLevel, 5);
             Hero->moveTo(envMain.getXRightBound(), envMain.getYLowerBound());
-            bgMoving -> clearMap();
+            //bgMoving -> clearMap(); ----> werkt precies niet meer ineens....
             envMain.setBuildEnvironment(true);
             envMain.goToEnvironment3();
         }
@@ -336,16 +321,15 @@ void MainScene::checkEnvironment2(u16 keys){
 void MainScene::checkEnvironment3(u16 keys){
     if(envMain.getEnvironment3()){
         if(envMain.getBuildEnvironment()){
-            removePlatforms();
             removeEnemy = false;
-            Enemy->flipHorizontally(true);
+            removePlatforms();
             engine->updateSpritesInScene();
+            Enemy->flipHorizontally(true);
             envMain.setBuildEnvironment(false);
         }
 
         if(Hero -> collidesWith(*Enemy) && keys & KEY_A){
-            if (!textBool1)
-            {
+            if (!textBool1){
             TextStream::instance() << "You killed the enemy! Great Job!";
             textBool1 = true;
             }
@@ -366,13 +350,32 @@ void MainScene::checkEnvironment3(u16 keys){
         }
 
         if(Hero -> getX() >= envMain.getXRightBound() && envMain.getIsJumped()){
-            bgLevel->updateMap(Main_Scene_Background2Map);
-            bgLevel->scroll(10, 5);
-            Hero->moveTo(Hero -> getX(), Hero->getY());
-            bgMoving -> updateMap(Moving_Background2Map);
-            envMain.setBuildEnvironment(true);
-            removeEnemy = true;
-            envMain.goToEnvironment2();
+
+            if(removeEnemy){
+                if(!engine->getTransition()){
+                engine->dequeueAllSounds();
+                engine->setTransition(true);
+
+                bgMoving->clearMap();
+                bgMoving->clearData();
+                bgLevel->clearMap();
+                bgLevel->clearData();
+
+                envMain.setDead(true);
+
+                removePlatforms();
+
+                engine->transitionIntoScene(new EndScene(engine), new FadeOutScene(2));
+                }
+            }else{
+                bgLevel->updateMap(Main_Scene_Background2Map);
+                bgLevel->scroll(10, 5);
+                Hero->moveTo(Hero -> getX(), Hero->getY());
+                bgMoving -> updateMap(Moving_Background2Map);
+                envMain.setBuildEnvironment(true);
+                removeEnemy = true;
+                envMain.goToEnvironment2();
+            }
         }
     }
 }
@@ -467,11 +470,5 @@ void MainScene::tick(u16 keys)
     {
         engine->enqueueSound(Slash_Audio, Slash_Audio_bytes, 88200);
         Hero->animateToFrame(7);
-
-        if (!textBool1)
-        {
-            TextStream::instance() << Hero->getX() << "&&" << Hero->getY(); //coordinate checker....
-            textBool1 = true;
-        }
     }
 }
