@@ -20,6 +20,7 @@ int textCounter1;
 
 bool textBool1;
 bool removeEnemy = true;
+bool removePlatform = true;
 bool platformSwitch;
 
 MainScene::MainScene(const std::shared_ptr<GBAEngine> engine) : Scene(engine), scrollX(0), scrollY(0), scrollLevel(0) {}
@@ -29,7 +30,10 @@ std::vector<Sprite *> MainScene::sprites(){
     sprites.clear();
 
     if(envMain.getEnvironment1()){
-        sprites.push_back(PlatformSprite.get());
+        if(!removePlatform){
+            sprites.push_back(PlatformSprite.get());
+        }
+
         for (auto &p : platforms)
         {
             sprites.push_back(p->getSprite());
@@ -64,7 +68,7 @@ void MainScene::load()
 
     PlatformSprite = spriteBuilder-> withData(Platform_SingleTiles, sizeof(Platform_SingleTiles))
     .withSize(SIZE_16_16)
-    .withLocation(214, envMain.getYLowerBound() + 15 - 48)
+    .withLocation(214, 108 + 15 - 48) 
     .buildPtr();
 
     Hero = spriteBuilder -> withData(HeroTiles, sizeof(HeroTiles))
@@ -109,9 +113,8 @@ void MainScene::checkEnvironment1()
     if(envMain.getEnvironment1()){
         if(envMain.getBuildEnvironment()){
             removePlatforms();
-            platforms.push_back(createPlatform(54, envMain.getYLowerBound() + 15));
-            platforms.push_back(createPlatform(102, envMain.getYLowerBound() + 15));
-            platforms.push_back(createPlatform(166, envMain.getYLowerBound() + 15));
+            platforms.push_back(createPlatform(54, 108 + 15));
+            platforms.push_back(createPlatform(102, 108 + 15));
             engine->updateSpritesInScene();
             platformSwitch = false;
             envMain.setBuildEnvironment(false);
@@ -131,8 +134,8 @@ void MainScene::checkEnvironment1()
         {
             if (platformSwitch){
                 removePlatforms();
-                platforms.push_back(createPlatform(54, envMain.getYLowerBound() + 15));
-                platforms.push_back(createPlatform(102, envMain.getYLowerBound() + 15));
+                platforms.push_back(createPlatform(54, 108 + 15));
+                platforms.push_back(createPlatform(102, 108 + 15));
                 engine->updateSpritesInScene();
                 platformSwitch = false;
             }
@@ -172,6 +175,8 @@ void MainScene::checkEnvironment1()
                 envMain.setDead(true);
 
                 removePlatforms();
+                removePlatform = true;
+                engine->updateSpritesInScene();
 
                 engine->transitionIntoScene(new EndScene(engine), new FadeOutScene(2));
             }
@@ -182,7 +187,6 @@ void MainScene::checkEnvironment1()
                 envMain.setOffPlatform1();
                 envMain.setOnSurface();
             }
-
             if (Hero->collidesWith(*platforms.at(1)->getSprite()) && Hero->getY() >= envMain.getYHigherBound() + 15 && Hero->getX() >= 86 && Hero->getX() <= 104)
             {
                 envMain.setOffSurface();
@@ -202,22 +206,20 @@ void MainScene::checkEnvironment1()
         {
             if (!platformSwitch){
                 removePlatforms();
-                platforms.push_back(createPlatform(166, envMain.getYLowerBound() + 15));
-                platforms.push_back(createPlatform(182, envMain.getYLowerBound() + 15 - 16));
-                platforms.push_back(createPlatform(198, envMain.getYLowerBound() + 15 - 32));
-                //platforms.push_back(createPlatform(214, envMain.getYLowerBound() + 15 - 48));
+                platforms.push_back(createPlatform(166, 108 + 15));
+                platforms.push_back(createPlatform(182, 108 + 15 - 16));
+                platforms.push_back(createPlatform(198, 108 + 15 - 32));
                 engine->updateSpritesInScene();
                 platformSwitch = true;
             }
 
             //platform 3...
-            if (Hero->getX() <= 144 && Hero->getX() >= 142 && Hero->getY() >= envMain.getYLowerBound())
+            if (Hero->getX() >= 146 && Hero->getX() <= 148 && Hero->getY() >= envMain.getYLowerBound())
             {
                 envMain.setOffPlatform1();
                 envMain.setOnSurface();
             }
-
-            if (Hero->collidesWith(*platforms.at(0)->getSprite()) && Hero->getY() >= envMain.getYHigherBound() + 15 && Hero->getX() >= 142)
+            if (Hero->collidesWith(*platforms.at(0)->getSprite()) && Hero->getY() >= envMain.getYHigherBound() + 15 && Hero->getX() >= 150)
             {
                 envMain.setOffSurface();
                 envMain.setOnPlatform1();
@@ -229,7 +231,7 @@ void MainScene::checkEnvironment1()
             }
 
             //platform 4...
-            if (Hero->getX() <= 162 && Hero->getX() >= 160 && Hero->getY() >= envMain.getYLowerBound())
+            if (Hero->getX() >= 164 && Hero->getX() <= 166 && Hero->getY() >= envMain.getYLowerBound())
             {
                 envMain.setOffPlatform2();
                 envMain.setOnPlatform1();
@@ -240,13 +242,13 @@ void MainScene::checkEnvironment1()
                 envMain.setOnPlatform2();
                 Hero->moveTo(Hero->getX(), envMain.getYLowerBound());
             }
-            else if (Hero->collidesWith(*platforms.at(1)->getSprite()) && Hero->getY() >= envMain.getYLowerBound() && Hero->getX() <= 143 && Hero->getX() >= 155)
+            else if (Hero->collidesWith(*platforms.at(1)->getSprite()) && Hero->getY() >= envMain.getYLowerBound() && Hero->getX() <= 167 && Hero->getX() >= 155)
             {
                 Hero->moveTo(156, envMain.getYLowerBound());
             }
 
             //platform 5...
-            if (Hero->getX() <= 180 && Hero->getX() >= 178 && Hero->getY() >= envMain.getYLowerBound())
+            if (Hero->getX() >= 182 && Hero->getX() <= 184 && Hero->getY() >= envMain.getYLowerBound())
             {
                 envMain.setOffPlatform3();
                 envMain.setOnPlatform2();
@@ -257,13 +259,13 @@ void MainScene::checkEnvironment1()
                 envMain.setOnPlatform3();
                 Hero->moveTo(Hero->getX(), envMain.getYLowerBound());
             }
-            else if (Hero->collidesWith(*platforms.at(2)->getSprite()) && Hero->getY() >= envMain.getYLowerBound() && Hero->getX() <= 159 && Hero->getX() >= 171)
+            else if (Hero->collidesWith(*platforms.at(2)->getSprite()) && Hero->getY() >= envMain.getYLowerBound() && Hero->getX() <= 183 && Hero->getX() >= 171)
             {
                 Hero->moveTo(172, envMain.getYLowerBound());
             }
 
             //platform 6...
-            if (Hero->getX() <= 193 && Hero->getX() >= 191 && Hero->getY() >= envMain.getYLowerBound())
+            if (Hero->getX() >= 196 && Hero->getX() <= 198 && Hero->getY() >= envMain.getYLowerBound())
             {
                 envMain.setOffPlatform4();
                 envMain.setOnPlatform3();
@@ -274,9 +276,9 @@ void MainScene::checkEnvironment1()
                 envMain.setOnPlatform4();
                 Hero->moveTo(Hero->getX(), envMain.getYLowerBound());
             }
-            else if (Hero->collidesWith(*PlatformSprite.get()) && Hero->getY() >= envMain.getYLowerBound() && Hero->getX() <= 174 && Hero->getX() >= 186)
+            else if (Hero->collidesWith(*PlatformSprite.get()) && Hero->getY() >= envMain.getYLowerBound() && Hero->getX() <= 199 && Hero->getX() >= 187)
             {
-                Hero->moveTo(187, envMain.getYLowerBound());
+                Hero->moveTo(188, envMain.getYLowerBound());
             }
         }   
     }
@@ -465,5 +467,11 @@ void MainScene::tick(u16 keys)
     {
         engine->enqueueSound(Slash_Audio, Slash_Audio_bytes, 88200);
         Hero->animateToFrame(7);
+
+        if (!textBool1)
+        {
+            TextStream::instance() << Hero->getX() << "&&" << Hero->getY(); //coordinate checker....
+            textBool1 = true;
+        }
     }
 }
