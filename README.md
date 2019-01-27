@@ -51,6 +51,8 @@ All the code that is copied or used from other sources will be mentioned in the 
       
 4.  Create Ending Screen    -> Done! 
   
+5.  Create an ER-Diagram    -> Done! (Don't know if it's good though...)
+  
   
 #References:  
 Music           -->     https://downloads.khinsider.com/game-soundtracks/  
