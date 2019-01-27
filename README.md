@@ -14,22 +14,18 @@ Interact with the star for 5 seconds to go to the next level. walk all the way t
 At the green pipe use the arrow down key to get to the boss level.  
 
 ERRORS WITHING THE GAME:  
-because there is still something wrong with the implementation of 2 backgrounds at the same time.  
-the next scene cant load or there are some bad pixels withing the game itself. That is also  
-also the reason why I commented that BG3 has to be of in order to play the game with minimal errors.
+because there is still something wrong with the implementation of 2 backgrounds at the same time.    
+the next scene cant load or there are some bad pixels withing the game itself. That is also    
+also the reason why I commented that BG3 has to be of in order to play the game with minimal errors.  
 
-I put some code in a file calles "Extra code" because that was all the collision detection code.  
-but because of the weird background errors. the code doesnt work fully in the game. the game itself becomes   
-realy slow and glitchy when it is used.
+There are some small errors within the gravity at the stairs. i think it's  because i overloaded the game with  
+sprites, so the interactions with the sprites aren't that relaiable anymore.  
 
-I used another sprite with the exact same measurements as the hero but the sprite didn't load correctly.  
-Horizontal flipping doens't work anymore in the last scene... very weird.  
-
-not only that, there is an overload of sprites when i put more than 4 sprites in the scene....
-
-SOLUTION: a switch to remove and add platforms!  
+when I delete the mapping at the boss scene there are some green line through the screen. very weird  
+because i didn't change anything within that level and i just started appearing.  
+ 
+SOLUTION: a switch to remove and add platforms is a solution for the overload of sprites.  
   
-   
 DISCLAIMER:  
 All the code that is copied or used from other sources will be mentioned in the reference section of this file.  
   
@@ -50,11 +46,11 @@ All the code that is copied or used from other sources will be mentioned in the 
     -> Add background       -> Done!   
     -> Implement Controls   -> Done! 
     -> Collision Detection  -> Done! 
-    -> Score System         -> not yet
+    -> Score System         -> not yet....  
     -> created 2nd scene    -> Done!
     -> double moving scene  -> Done! don't know why there are ugly bits on the second bg layer. don't use it.....  
       
-4.  Create Ending Screen    -> Done! 
+4.  Create Ending Screen    -> Done! (For dying and finishing the game.)
   
 5.  Create an ER-Diagram    -> Done! (Don't know if it's good though...)
   
@@ -64,5 +60,6 @@ Music           -->     https://downloads.khinsider.com/game-soundtracks/
 GBA Specs       -->     https://www.cs.rit.edu/~tjh8300/CowBite/CowBiteSpec.htm  
 Used Sprites    -->     https://www.spriters-resource.com/  
 Sprite engine   -->     https://github.com/wgroeneveld/gba-sprite-engine  
+Syntax errors   -->     https://stackoverflow.com/
     
   
