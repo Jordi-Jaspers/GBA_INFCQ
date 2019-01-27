@@ -24,6 +24,11 @@ realy slow and glitchy when it is used.
 
 I used another sprite with the exact same measurements as the hero but the sprite didn't load correctly.  
 Horizontal flipping doens't work anymore in the last scene... very weird.  
+
+not only that, there is an overload of sprites when i put more than 4 sprites in the scene....
+
+SOLUTION: a switch to remove and add platforms!  
+  
    
 DISCLAIMER:  
 All the code that is copied or used from other sources will be mentioned in the reference section of this file.  

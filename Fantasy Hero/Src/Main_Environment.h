@@ -14,6 +14,7 @@ class Main_Environment
     bool onPlatform1;
     bool onPlatform2;
     bool onPlatform3;
+    bool onPlatform4;
 
     bool buildEnvironment;
     bool Environment1;
@@ -33,6 +34,7 @@ class Main_Environment
         onPlatform1 = false;
         onPlatform2 = false;
         onPlatform3 = false;
+        onPlatform4 = false;
         onSurface = true;
 
         Environment1 = true;
@@ -136,7 +138,7 @@ class Main_Environment
     {
         if (!onPlatform1)
         {
-            YHigherBound = 62;
+            YHigherBound = 59;
             YLowerBound = 92;
             onPlatform1 = true;
         }
@@ -146,8 +148,8 @@ class Main_Environment
     {
         if (!onPlatform2)
         {
-            YHigherBound = 44;
-            YLowerBound = 72;
+            YHigherBound = 43;
+            YLowerBound = 76;
             onPlatform2 = true;
         }
     }
@@ -156,9 +158,19 @@ class Main_Environment
     {
         if (!onPlatform3)
         {
-            YHigherBound = 26;
-            YLowerBound = 54;
+            YHigherBound = 27;
+            YLowerBound = 60;
             onPlatform3 = true;
+        }
+    }
+
+    void setOnPlatform4()
+    {
+        if (!onPlatform4)
+        {
+            YHigherBound = 11;
+            YLowerBound = 44;
+            onPlatform4 = true;
         }
     }
 
@@ -197,6 +209,15 @@ class Main_Environment
         }
     }
 
+    void setOffPlatform4()
+    {
+        if (onPlatform4)
+        {
+            onPlatform4 = false;
+            gravityOn = true;
+        }
+    }
+
     bool getOnPlatform1()
     {
         return onPlatform1;
@@ -210,6 +231,11 @@ class Main_Environment
     bool getOnPlatform3()
     {
         return onPlatform3;
+    }
+
+    bool getOnPlatform4()
+    {
+        return onPlatform4;
     }
 
     void setDead(bool boolean)
