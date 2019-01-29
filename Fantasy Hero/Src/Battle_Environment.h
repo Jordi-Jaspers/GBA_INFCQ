@@ -133,4 +133,6 @@ void setDead(bool booldead)
     }
 };
 
+extern Battle_Environment envBattle;
+
 #endif

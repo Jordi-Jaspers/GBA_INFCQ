@@ -32,6 +32,7 @@ class MainScene : public Scene
     std::vector<Sprite *> sprites() override;
     std::vector<Background *> backgrounds() override;
 
+    void enemyController();
     void checkEnvironment1();
     void checkEnvironment2(u16 i);
     void checkEnvironment3(u16 i);

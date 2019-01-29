@@ -7,8 +7,7 @@
 #include "End_Scene_Audio.h"
 #include "Sound_Effect.h"
 #include "Main_Environment.h"
-
-Main_Environment envEnd;
+#include "Battle_Environment.h"
 
 EndScene::EndScene(const std::shared_ptr<GBAEngine> engine) : Scene(engine)
 {
@@ -24,7 +23,7 @@ void EndScene::load()
     backgroundPalette = std::unique_ptr<BackgroundPaletteManager>(new BackgroundPaletteManager());
     engine->enqueueMusic(End_Scene_Audio, End_Scene_Audio_bytes, 88200);
 
-    if(envEnd.getDead()){
+    if(envMain.getDead() || envBattle.getDead()){
         engine->enqueueSound(Dead_Audio, Dead_Audio_bytes, 88200);
 
         TextStream::instance().setText("Hoe kun je nu doodgaan sukkel...", 8, 0);

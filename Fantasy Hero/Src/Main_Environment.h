@@ -259,4 +259,6 @@ class Main_Environment
     }
 };
 
+extern Main_Environment envMain;
+
 #endif

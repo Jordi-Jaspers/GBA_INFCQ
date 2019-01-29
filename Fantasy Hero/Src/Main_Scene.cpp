@@ -81,6 +81,7 @@ void MainScene::load()
         .withLocation(96, envMain.getYLowerBound())
         .withinBounds()
         .buildPtr();
+    Enemy->stopAnimating();    
 
     engine->enqueueMusic(Main_Scene_Audio, Main_Scene_Audio_bytes, 88200);
 
@@ -324,7 +325,6 @@ void MainScene::checkEnvironment3(u16 keys){
             removeEnemy = false;
             removePlatforms();
             engine->updateSpritesInScene();
-            Enemy->flipHorizontally(true);
             envMain.setBuildEnvironment(false);
         }
 
@@ -349,6 +349,10 @@ void MainScene::checkEnvironment3(u16 keys){
             bgLevel->scroll(scrollLevel, 5);
         }
 
+        if (Hero->getX() < 200 && scrollLevel <= 25){
+            enemyController();
+        }
+
         if(Hero -> getX() >= envMain.getXRightBound() && envMain.getIsJumped()){
             if(!removeEnemy){
                 bgLevel->updateMap(Main_Scene_Background2Map);
@@ -359,7 +363,7 @@ void MainScene::checkEnvironment3(u16 keys){
                 removeEnemy = true;
                 envMain.goToEnvironment2();
                 }
-            }else{
+            }else if(removeEnemy){
                 if(!engine->getTransition()){
                 engine->dequeueAllSounds();
                 engine->setTransition(true);
@@ -369,7 +373,7 @@ void MainScene::checkEnvironment3(u16 keys){
                 bgLevel->clearMap();
                 bgLevel->clearData();
 
-                envMain.setDead(true);
+                envMain.setDead(false);
 
                 removePlatforms();
 
@@ -379,9 +383,29 @@ void MainScene::checkEnvironment3(u16 keys){
     }
 }
 
+void MainScene::enemyController(){
+    int x = Hero -> getX();
+    int dx = Enemy -> getX() - x;
+
+    if(dx < 0){
+        Enemy -> animate();
+        Enemy -> flipHorizontally(true);
+        Enemy -> setVelocity(1, 0);
+    }
+    else if(dx > 0){
+        Enemy -> animate();
+        Enemy -> flipHorizontally(false);
+        Enemy -> setVelocity(-1, 0);
+    }
+    else if(Enemy -> collidesWith(*Hero)){
+        Enemy -> animateToFrame(7);
+    }
+}
+
 void MainScene::tick(u16 keys)
 {
     Hero -> stopAnimating();
+    Enemy -> stopAnimating();
 
     scrollX += 0.5;
     bgMoving->scroll(scrollX, scrollY);
